@@ -1,0 +1,16 @@
+Fourth & Glory v0.7 — 2026-10-04
+
+GEÇTİ: Eski 41 antrenman görevi; vuruş/pas/koşu/tackle/dalış çözümleri.
+GEÇTİ: Yeni 40 kariyer görevinin her birinde temel özelliklerle başarılı çözüm.
+GEÇTİ: 11v11, hareketli savunma, receiver seçimi, QB hareketi, scramble, fiziksel sack.
+GEÇTİ: Snap öncesi bekleme, duraklatma, dokunma iptali.
+GEÇTİ: Üniversite ve draft seçim kapıları, tekrar ödül/istatistik koruması.
+GEÇTİ: Kayıt dışa/içe aktarımı, bozuk veri reddi, antrenman izolasyonu.
+GEÇTİ: 18 bağımsız iskeletli oyuncu, 11 poz, sonlu kemik dönüşümleri, kamera eşleşmesi.
+GEÇTİ: 50 ardışık görünüm değişiminde aynı geometri/model/iskelet kullanımı.
+GEÇTİ: Dört 3D stadyum aşamasının sahne ağacı ve dönüşüm değerleri.
+GEÇTİ: Gerçek UI işleyicileriyle oluşturma → harita → maç → snap/pas → üniversite seçimi; oyuncu kartı, paket atlama ve antrenman geçişi.
+
+Sınır: UI testleri küçük bir DOM adaptörüyle, 3D testleri CPU üzerinde yürütülür.
+Bunlar gerçek tarayıcı ekran görüntüsü veya GPU doğrulaması değildir.
+Telefon FPS/bellek, Safari/Android görünümü ve dokunmatik ergonomi cihazda denenmelidir.
