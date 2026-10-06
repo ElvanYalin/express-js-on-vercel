@@ -10,13 +10,13 @@ function create(canvas,opts={}){if(!T||!root.FGAthlete)return legacy.create(canv
  function buildStudio(){const g=new T.Group();scene.add(g);
   // Soyunma odası fonu: düşük çözünürlüklü tuvale çizilip büyütülür → doğal bulanıklık (sahte alan derinliği).
   const cv=document.createElement('canvas');cv.width=256;cv.height=128;const x=cv.getContext('2d');const tex=new T.CanvasTexture(cv);tex.colorSpace=T.SRGBColorSpace;
-  function paint(team){if(!x||!x.createLinearGradient)return;const gr=x.createLinearGradient(0,0,0,128);gr.addColorStop(0,'#07090c');gr.addColorStop(.55,'#141a21');gr.addColorStop(1,'#0b0e12');x.fillStyle=gr;x.fillRect(0,0,256,128);
+  function paint(team){const gr=x&&x.createLinearGradient&&x.createLinearGradient(0,0,0,128);if(!gr)return;gr.addColorStop(0,'#07090c');gr.addColorStop(.55,'#141a21');gr.addColorStop(1,'#0b0e12');x.fillStyle=gr;x.fillRect(0,0,256,128);
    for(let i=0;i<16;i++){const lx=i*16+1;x.fillStyle=i%2?'#1c242d':'#19212a';x.fillRect(lx,30,14,70);x.fillStyle='rgba(255,255,255,.05)';for(let k=0;k<4;k++)x.fillRect(lx+3,36+k*3,8,1);x.fillStyle=team||'#18324f';x.globalAlpha=.55;x.fillRect(lx,30,14,4);x.globalAlpha=1;}
    const sp=x.createRadialGradient(128,40,4,128,60,120);sp.addColorStop(0,'rgba(255,236,205,.20)');sp.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=sp;x.fillRect(0,0,256,128);tex.needsUpdate=true;}
   paint();
   const back=new T.Mesh(new T.CylinderGeometry(10,10,9,48,1,true),new T.MeshBasicMaterial({map:tex,side:T.BackSide,fog:false}));back.position.y=3.6;g.add(back);
   // Kauçuk zemin: ortada spot ışık lekesi, kenarda koyulaşma.
-  const fc=document.createElement('canvas');fc.width=fc.height=256;const fx=fc.getContext('2d');if(fx&&fx.createRadialGradient){const fg=fx.createRadialGradient(128,128,8,128,128,128);fg.addColorStop(0,'#3a4048');fg.addColorStop(.45,'#1f242a');fg.addColorStop(1,'#0a0c0f');fx.fillStyle=fg;fx.fillRect(0,0,256,256);fx.strokeStyle='rgba(255,255,255,.05)';fx.lineWidth=2;fx.beginPath();fx.arc(128,128,46,0,Math.PI*2);fx.stroke();}
+  const fc=document.createElement('canvas');fc.width=fc.height=256;const fx=fc.getContext('2d'),fg=fx&&fx.createRadialGradient&&fx.createRadialGradient(128,128,8,128,128,128);if(fg){fg.addColorStop(0,'#3a4048');fg.addColorStop(.45,'#1f242a');fg.addColorStop(1,'#0a0c0f');fx.fillStyle=fg;fx.fillRect(0,0,256,256);fx.strokeStyle='rgba(255,255,255,.05)';fx.lineWidth=2;fx.beginPath();fx.arc(128,128,46,0,Math.PI*2);fx.stroke();}
   const ft=new T.CanvasTexture(fc);ft.colorSpace=T.SRGBColorSpace;const floor=new T.Mesh(new T.CircleGeometry(10,48),new T.MeshStandardMaterial({map:ft,roughness:.82,metalness:0}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;g.add(floor);
   // Üç nokta ışık: key (gölgeli spot, 5600K), fill (ambiyans), rim (takım rengi).
   const key=new T.SpotLight(0xfff1df,60,30,.55,.6,1.6);key.position.set(-2.6,6.2,4.2);key.target.position.set(0,1,0);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.near=2;key.shadow.camera.far=14;key.shadow.bias=-.0004;key.shadow.radius=4;g.add(key,key.target);
@@ -43,7 +43,7 @@ function create(canvas,opts={}){if(!T||!root.FGAthlete)return legacy.create(canv
  part('wristCoach',d.arms[0].userData.elbow,new T.BoxGeometry(.105,.105,.02),'#1b2431',0,-.19,.055);
  part('beard',d.head,new T.SphereGeometry(1,12,8),'#241b16',0,-.07,.035).scale.set(.073,.03,.055);
  d.sockMaterials=[];d.legs.forEach(a=>a.userData.knee.traverse(o=>{if(o.isMesh&&o.material===d.materials[6]&&o.geometry?.type==='BufferGeometry'){o.material=o.material.clone();d.sockMaterials.push(o.material);}}));d.cosmetics=parts;d.baseHair=[];d.head.traverse(o=>{if(o.isMesh&&o.material===d.materials[9])d.baseHair.push({o,y:o.scale.y});});
- applyLook(m,e);if(studio)studioize(m);scene.add(m);return m;}
+ applyLook(m,e);if(studio)studioize(m);else if(shadowsOn)m.traverse(x=>{if(x.isMesh)x.castShadow=true;});scene.add(m);return m;}
  // Equip parıltısı: kenar (fresnel) ışıması; nadirlik rengiyle 0→1→0 atım.
  function studioize(m){const u={uGlow:{value:0},uGlowColor:{value:new T.Color('#b7ff4c')}};m.userData.glowU=u;const seen=new Set();
   m.traverse(o=>{if(!o.isMesh)return;o.castShadow=true;for(const mat of [o.material].flat()){if(!mat||seen.has(mat)||!mat.isMeshStandardMaterial)continue;seen.add(mat);
@@ -57,6 +57,30 @@ function create(canvas,opts={}){if(!T||!root.FGAthlete)return legacy.create(canv
  p.longHair.visible=l.hair==='long';p.longHair.material.color.set(l.hairColor||'#211b16');for(let i=0;i<7;i++){p['dread'+i].visible=l.hair==='dreads';p['dread'+i].material.color.set(l.hairColor||'#211b16');}
  p.beard.visible=!!l.beard&&l.beard!=='none';p.beard.scale.y=l.beard==='full'?.047:.03;p.beard.material.color.set(l.hairColor||'#241b16');
  }
+ // Gökyüzü kubbesi: degrade + güneş diski/halesi + ince bulut + gece yıldızları (2D gökyüzünün yerine).
+ const skyU={uTop:{value:new T.Color()},uMid:{value:new T.Color()},uHorizon:{value:new T.Color()},uSunDir:{value:new T.Vector3(0,1,0)},uSunColor:{value:new T.Color()},uStars:{value:0}};
+ const sky=new T.Mesh(new T.SphereGeometry(360,32,16),new T.ShaderMaterial({uniforms:skyU,side:T.BackSide,depthWrite:false,fog:false,toneMapped:false,
+  vertexShader:'varying vec3 vDir;void main(){vDir=position;vec4 p=projectionMatrix*modelViewMatrix*vec4(position,1.);gl_Position=p.xyww;}',
+  fragmentShader:`uniform vec3 uTop,uMid,uHorizon,uSunDir,uSunColor;uniform float uStars;varying vec3 vDir;
+  float h21(vec2 p){return fract(sin(dot(p,vec2(41.3,289.1)))*43758.5453);}
+  float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}
+  void main(){vec3 d=normalize(vDir);float h=d.y;
+   vec3 c=mix(uHorizon,uMid,smoothstep(-.02,.16,h));c=mix(c,uTop,smoothstep(.16,.62,h));
+   float s=max(dot(d,normalize(uSunDir)),0.);c+=uSunColor*(pow(s,900.)*3.+pow(s,10.)*.3*(1.-uStars));
+   vec2 uv=d.xz/(h+.15)*1.6;float cl=vn(uv*1.5)*.6+vn(uv*3.7)*.4;cl=smoothstep(.55,.9,cl)*smoothstep(.02,.25,h)*(1.-uStars*.85);
+   c=mix(c,mix(uHorizon,vec3(1.),.45),cl*.35);
+   if(uStars>0.){float st=step(.9975,h21(floor(d.xz/(h+.3)*180.)))*smoothstep(.1,.4,h);c+=vec3(st)*uStars*.8;}
+   c=mix(uHorizon*.55,c,smoothstep(-.12,0.,h));gl_FragColor=vec4(c,1.);
+   #include <colorspace_fragment>
+  }`}));
+ sky.renderOrder=-1;sky.frustumCulled=false;sky.visible=false;scene.add(sky);scene.add(sun.target);
+ const fogObj=new T.Fog('#26374a',90,240),shadowDir=new T.Vector2(.18,0);let shadowsOn=false,lastTime=0,confettiAt=-1,confettiZ=0;
+ // Kalite: ayar ya da otomatik (ilk 120 karenin süresine göre düşürülür).
+ let autoQ='medium',frames=0,acc=0,lastT=0;
+ function pickQuality(){const now=root.performance?performance.now():0;if(lastT){const dt=now-lastT;if(dt<200&&frames<120){frames++;acc+=dt;if(frames===120&&acc/120>28)autoQ='low';}}lastT=now;
+  let q='auto';try{q=root.FG_STATE.get().settings.quality||'auto';}catch(e){}return q==='auto'?autoQ:q;}
+ function setShadows(on){shadowsOn=on;if(renderer.shadowMap){renderer.shadowMap.enabled=on||!!rig;renderer.shadowMap.type=T.PCFSoftShadowMap;}sun.castShadow=on;if(on){sun.shadow.mapSize.set(2048,2048);const c=sun.shadow.camera;c.left=-30;c.right=30;c.top=30;c.bottom=-30;c.near=1;c.far=180;c.updateProjectionMatrix();sun.shadow.bias=-.0005;}
+  models.forEach(o=>o.m.traverse(x=>{if(x.isMesh)x.castShadow=on||!!rig;}));scene.traverse(x=>{if(x.material&&!Array.isArray(x.material))x.material.needsUpdate=true;});}
  let stadium=null,stadiumKey='';const nightColor=new T.Color('#132638'),nightFog=new T.Fog('#26374a',90,240);const groundShadows=new T.InstancedMesh(new T.CircleGeometry(.62,16),new T.MeshBasicMaterial({color:0x132416,transparent:true,opacity:.26,depthWrite:false}),40);groundShadows.rotation.x=-Math.PI/2;scene.add(groundShadows);const shadowTransform=new T.Object3D();
  function pose(m,e){const d=m.userData;root.FGAthlete.pose(m,{speed:e.moving>0.1?5:0,number:e.num,action:({block:'block',stance:'ready',throw:'ready',release:'throw',catch:'catch',reach:'catch',celebrate:'celebrate',tackle:'block'})[e.pose]||'idle',carry:e.pose==='carry'},(e.anim||0)/9,'live');
  m.position.set(e.x,(e.y||0),e.z);m.rotation.set(0,(e.yaw??(e.facing==='down'?Math.PI:0))+Math.PI,0);d.helmet.visible=!e.helmetOff;d.ball.visible=false;
@@ -73,13 +97,24 @@ function create(canvas,opts={}){if(!T||!root.FGAthlete)return legacy.create(canv
   else if(s.gesture==='helmet'){d.head.rotation.x+=.22*wave;}
   if(m.userData.glowU){m.userData.glowU.uGlow.value=s.glow||0;m.userData.glowU.uGlowColor.value.set(s.glowColor||'#b7ff4c');}}
  }
- return {ok:true,enhanced:true,stadium:true,resize(w,h,d){W=w;H=h;renderer.setPixelRatio(Math.min(d,1.5));renderer.setSize(w,h,false);},render(cam,ents,b,shake,props,opt={}){if(lost)return;
- const sk=opt.stadium?JSON.stringify([opt.stage,opt.home]):'';
- if(sk&&sk!==stadiumKey){if(stadium)release(stadium);stadium=root.FG_STADIUM.create(opt.stage||'camp',opt.home);scene.add(stadium);stadiumKey=sk;}
- if(stadium){stadium.visible=!!sk;if(stadium.userData.crowd)stadium.userData.crowd.position.y=Math.sin((opt.time||0)*3)*.035;}
- const night=sk&&opt.stage==='pro',sunset=sk&&opt.stage==='college';ambient.intensity=night?1.8:2.3;sun.intensity=night?1.5:2.8;sun.color.set(sunset?0xffd5a8:night?0xdbeaff:0xfff0d9);rim.intensity=night?1.6:.7;scene.background=night?nightColor:null;scene.fog=night?nightFog:null;groundShadows.visible=!!sk;groundShadows.count=Math.min(40,ents.length);for(let i=0;i<groundShadows.count;i++){shadowTransform.position.set(ents[i].x+.18,-ents[i].z,.03);shadowTransform.scale.set(1.4,.75,1);shadowTransform.updateMatrix();groundShadows.setMatrixAt(i,shadowTransform.matrix);}groundShadows.instanceMatrix.needsUpdate=true;
+ return {ok:true,enhanced:true,stadium:true,debug:()=>({scene,camera,renderer}),mark(x,z){stadium?.userData.mark?.(x,z);},fadeMarks(){stadium?.userData.fadeMarks?.();},confetti(){confettiAt=lastTime;confettiZ=camera.position.z-16;},resize(w,h,d){W=w;H=h;const q=studio?'high':pickQuality();renderer.setPixelRatio(Math.min(d,q==='low'?1:q==='high'?1.5:1.25));renderer.setSize(w,h,false);},render(cam,ents,b,shake,props,opt={}){if(lost)return;
+ const quality=pickQuality();
+ const sk=opt.stadium?JSON.stringify([opt.stage,opt.home,opt.away,opt.names,quality]):'';
+ if(sk&&sk!==stadiumKey){if(stadium)release(stadium);const n=opt.names||{};stadium=root.FG_STADIUM.create(opt.stage||'camp',opt.home,{away:opt.away,homeName:n.home,awayName:n.away,awayShort:n.awayShort,monogram:n.mono,quality});scene.add(stadium);stadiumKey=sk;setShadows(quality==='high');}
+ const L=sk&&root.FG_LOOK?root.FG_LOOK.resolve(opt.stage,opt.progress||0):null;lastTime=opt.time||0;
+ if(stadium){stadium.visible=!!sk;stadium.userData.update&&stadium.userData.update({time:opt.time,cheer:opt.cheer,ballZ:opt.ballZ,lights:L?L.lights:0,dust:L?L.dust:0,stunt:opt.stunt,losZ:opt.losZ,fdZ:opt.fdZ,confettiAt,confettiZ,px:renderer.getPixelRatio?renderer.getPixelRatio():1});}
+ sky.visible=!!L;
+ if(L){ // Aşama görünümü: güneş yönü, gökyüzü kubbesi ve gölge yönü aynı vektörden gelir.
+  const d=root.FG_LOOK.sunDir(L);ambient.color.set(L.amb.sky);ambient.groundColor.set(L.amb.ground);ambient.intensity=L.amb.int;
+  sun.color.set(L.sun.color);sun.intensity=L.sun.int;sun.target.position.set(cam.x,0,cam.z-22);sun.position.set(cam.x+d[0]*70,d[1]*70,cam.z-22+d[2]*70);
+  rim.color.set(L.rim.color);rim.intensity=L.rim.int;renderer.toneMappingExposure=L.exposure;
+  if(L.fog){fogObj.color.set(L.fog.color);fogObj.near=L.fog.near;fogObj.far=L.fog.far;scene.fog=fogObj;}else scene.fog=null;scene.background=null;
+  skyU.uTop.value.set(L.sky[0]);skyU.uMid.value.set(L.sky[1]);skyU.uHorizon.value.set(L.sky[2]);skyU.uSunDir.value.set(d[0],d[1],d[2]);skyU.uSunColor.value.set(L.sun.color);skyU.uStars.value=L.stars;
+  shadowDir.set(-d[0],-d[2]).multiplyScalar(Math.min(3.2,.35/Math.max(.08,Math.tan(L.sun.elev*Math.PI/180))));
+ }else if(!rig){ambient.intensity=2.3;sun.intensity=2.8;rim.intensity=.7;scene.background=null;scene.fog=null;shadowDir.set(.18,0);}
+ groundShadows.visible=!!sk&&!shadowsOn;groundShadows.count=Math.min(40,ents.length);for(let i=0;i<groundShadows.count;i++){shadowTransform.position.set(ents[i].x+shadowDir.x*.55,-(ents[i].z+shadowDir.y*.55),.03);shadowTransform.rotation.z=Math.atan2(-shadowDir.y,shadowDir.x);shadowTransform.scale.set(1+shadowDir.length()*.6,.75,1);shadowTransform.updateMatrix();groundShadows.setMatrixAt(i,shadowTransform.matrix);}groundShadows.instanceMatrix.needsUpdate=true;
  if(rig){ambient.intensity=.35;sun.intensity=0;rim.intensity=0;scene.background=null;scene.fog=null;groundShadows.visible=false;const team=opt.home?.jersey||'';if(team!==rig.team){rig.team=team;rig.paint(team);rig.rimL.color.set(opt.home?.trim||'#9fd0ff');}}
- camera.position.set(cam.x,cam.y,cam.z);camera.rotation.set(-cam.pitch,0,0);camera.fov=2*Math.atan(H/(2*cam.f))*180/Math.PI;camera.aspect=W/H;camera.updateProjectionMatrix();camera.projectionMatrix.elements[8]=-2*(shake?.x||0)/W;camera.projectionMatrix.elements[9]=2*cam.cy-1+2*(shake?.y||0)/H;camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+ camera.position.set(cam.x,cam.y,cam.z);camera.rotation.set(-cam.pitch,0,0);sky.position.copy(camera.position);camera.fov=2*Math.atan(H/(2*cam.f))*180/Math.PI;camera.aspect=W/H;camera.updateProjectionMatrix();camera.projectionMatrix.elements[8]=-2*(shake?.x||0)/W;camera.projectionMatrix.elements[9]=2*cam.cy-1+2*(shake?.y||0)/H;camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
  for(let i=0;i<ents.length;i++){const e=ents[i],key=JSON.stringify([e.num,e.colors,e.gear,e.look,e.lefty]);if(!models[i])models[i]={key,m:build(e)};else if(models[i].key!==key){applyLook(models[i].m,e);models[i].key=key;}pose(models[i].m,e);models[i].m.visible=true;}
  for(let i=ents.length;i<models.length;i++)models[i].m.visible=false;
  const key=JSON.stringify((props||[]).map(o=>[o.kind,o.r,o.y]));if(key!==propsKey){for(const o of [...propsGroup.children]){propsGroup.remove(o);release(o);}for(const p of props||[]){let mesh;if(p.kind==='hoop'){mesh=addon(propsGroup,new T.TorusGeometry(p.r,.10,8,24),'#ff732d',0,0,0);}else if(p.kind==='dummy')mesh=addon(propsGroup,new T.CylinderGeometry(.3,.3,1.7,12),'#efc924',0,0,0);else mesh=addon(propsGroup,new T.ConeGeometry(.25,.6,10),'#f57821',0,0,0);mesh.userData.kind=p.kind;}propsKey=key;}

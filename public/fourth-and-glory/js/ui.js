@@ -90,7 +90,8 @@
     level=l; show("gameScreen"); $("#pauseBtn").disabled=false;
     if(!engineReady){ const fx=E.init($("#stage")); GAME.attachInput(fx); engineReady=true; } else E.resize();
     GAME.startLevel(l); GAME.pause(true); GAME.setRunning(true);
-    $("#introTitle").textContent=l.practice?`ANTRENMAN ${l.id}`:`${l.chapter} · ${l.id}`; $("#introVenue").textContent=l.team.venue;
+    $("#introTitle").textContent=l.practice?`ANTRENMAN ${l.id}`:`${l.chapter} · ${l.id}`; // Kolej maçları seçilen okulun stadyumunda oynanır; Seviye 2 = homecoming.
+    const sc=FG_CAREER.currentTeam(l.id); $("#introVenue").textContent=!l.practice&&l.stage==="college"&&sc?`${sc.name} Stadyumu${l.id===2?" · Homecoming":""}`:l.team.venue;
     crestEl($("#introAwayCrest"),l.team); crestEl($("#introHomeCrest"),{...homeCrest(),short:homeCrest().short});
     document.querySelector("#introHomeCrest + b").textContent=FG_CAREER.currentTeam(l.id)?.name||"GLORY";
     $("#introAwayName").textContent=l.team.name.toUpperCase();
@@ -223,7 +224,7 @@
   function init(){
     buildCreator();
     $("#playBtn").onclick=()=>{ FG_AUDIO.unlock(); FG_AUDIO.play("tap"); const s=S.get(); openIntro(D.levels.find(l=>l.id===Math.min(s.unlocked,D.levels.length))); };
-    $("#introStart").onclick=()=>{ FG_AUDIO.unlock(); FG_AUDIO.play("whistle"); overlay("#introOverlay",false); GAME.pause(false); };
+    $("#introStart").onclick=()=>{ FG_AUDIO.unlock(); FG_AUDIO.play(level&&level.stage==="college"&&!level.practice?"fanfare":"whistle"); overlay("#introOverlay",false); GAME.pause(false); };
     $("#introBack").onclick=openMap;
     $$("#passPanel button").forEach(b=>b.onclick=()=>{ GAME.setPassType(b.dataset.pass); FG_AUDIO.play("tap"); });
     $("#pauseBtn").onclick=()=>{ GAME.pause(true); overlay("#pauseOverlay",true); };

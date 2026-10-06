@@ -91,9 +91,12 @@
   E.setCrowdColors=(home,away)=>{ crowdPalette=[home.jersey,home.trim,away.jersey,away.trim,"#f4f4f4","#f4f4f4",home.jersey,"#1b1b1b",away.jersey,"#c9c9c9"]; };
 
   // ---------- stadyum ----------
+  let curStage="camp", curProgress=0;
   function drawSky(){
     const hz=project(cam.x,0,cam.z-2000), hy=hz?hz.y:H*.3;
-    const g=ctx.createLinearGradient(0,0,0,Math.max(10,hy)); g.addColorStop(0,"#5d8fc4"); g.addColorStop(1,"#d9e7f2");
+    // Aşama görünümü (FG_LOOK): 2D yedek çizici de WebGL gökyüzüyle aynı renkleri kullanır.
+    const sk=window.FG_LOOK?FG_LOOK.resolve(curStage,curProgress).sky:["#5d8fc4","#a9c9e6","#d9e7f2"];
+    const g=ctx.createLinearGradient(0,0,0,Math.max(10,hy)); g.addColorStop(0,sk[0]); g.addColorStop(.6,sk[1]); g.addColorStop(1,sk[2]);
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
     // uzak tepeler
     ctx.fillStyle="#7f9aa8"; ctx.fillRect(0,hy-6,W,8);
@@ -182,7 +185,7 @@
     if(!W) return;
     sx0=cam.shake?(Math.random()-.5)*cam.shake:0; sy0=cam.shake?(Math.random()-.5)*cam.shake:0;
     ctx=bgCtx; ctx.setTransform(dpr,0,0,dpr,0,0);
-    drawSky(); if(!useGL||!glR.stadium){drawStands(t); drawField(sc); drawGoalpost(-END_Z);}
+    curStage=sc.stage||"camp"; curProgress=sc.progress||0; drawSky(); if(!useGL||!glR.stadium){drawStands(t); drawField(sc); drawGoalpost(-END_Z);}
     if(sc.underlay) sc.underlay();
     const ents=sc.ents||[];
     if(useGL){
@@ -190,7 +193,7 @@
       ents.forEach(e=>{ const f=e.fall||0; shadow(e.x+(f?(e.fallDir||1)*.9*f:0),e.z,.55+f*.6,.42); if(e.ring){ const k=.55+.45*Math.sin(t*6); ring(e.x,e.z,.85,`rgba(183,255,76,${k})`,null,3); } });
       if(sc.ball&&!sc.ball.hidden&&sc.ball.h>.2) shadow(sc.ball.x,sc.ball.z,.25,.3*Math.max(.3,1-sc.ball.h/12));
       (sc.props||[]).forEach(o=>{ if(o.kind==="hoop") shadow(o.x,o.z,.3,.25); else shadow(o.x,o.z,.5,.3); });
-      glR.render(cam,ents,sc.ball,{x:sx0,y:sy0},sc.props,{stadium:true,stage:sc.stage,home:sc.home,time:t});
+      glR.render(cam,ents,sc.ball,{x:sx0,y:sy0},sc.props,{stadium:true,stage:sc.stage,home:sc.home,away:sc.away,names:sc.names,progress:sc.progress,time:t,cheer:E.cheer||0,stunt:sc.stunt,ballZ:sc.ball&&!sc.ball.hidden?sc.ball.z:cam.z-20,losZ:sc.los!=null?E.zOf(sc.los):null,fdZ:sc.fd!=null&&sc.fd<100?E.zOf(sc.fd):null});
     } else {
       const items=[]; ents.forEach(e=>{ const p=toCam(e.x,0,e.z); if(p.d>cam.near) items.push({d:p.d,f:()=>drawEnt(e)}); });
       if(sc.ball&&!sc.ball.hidden){ const p=toCam(sc.ball.x,0,sc.ball.z); if(p.d>cam.near) items.push({d:p.d-.3,f:()=>drawBallObj(sc.ball)}); }
@@ -205,5 +208,10 @@
   function tag(t,x,y,c){ ctx.save(); ctx.font="900 10px system-ui"; ctx.textAlign="center"; const w=ctx.measureText(t).width+12;
     ctx.fillStyle="rgba(6,17,26,.82)"; ctx.beginPath(); ctx.roundRect(x-w/2,y-12,w,17,8.5); ctx.fill(); ctx.fillStyle=c; ctx.fillText(t,x,y+1); ctx.restore(); }
   E.drawEntDirect=drawEnt;
+  // Çevresel etkileşimler: çim izi, iz solması, konfeti (WebGL yoksa sessizce yok sayılır).
+  E.debugGL=()=>useGL&&glR.debug?glR.debug():null;
+  E.mark=(x,z)=>{ if(useGL&&glR.mark) glR.mark(x,z); };
+  E.fadeMarks=()=>{ if(useGL&&glR.fadeMarks) glR.fadeMarks(); };
+  E.confetti=()=>{ if(useGL&&glR.confetti) glR.confetti(); };
   window.FG_ENGINE=E;
 })();

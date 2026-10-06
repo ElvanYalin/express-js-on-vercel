@@ -21,6 +21,7 @@
 
   const A=k=>S.attr(k);
   const home=()=>D.homeKit, away=()=>G.awayKit||G.level.team.kit;
+  function venueNames(){ const sc=window.FG_CAREER?.currentTeam?.(G.level.id); return {home:sc?sc.name:'Glory',mono:sc?sc.short:'4G',away:G.level.team.name,awayShort:G.level.team.short}; }
   function ent(team,num,x,z,o={}){ const e={team,num,x,z,y:0,facing:team==="home"?"up":"down",pose:"stand",anim:Math.random()*6,moving:0,colors:team==="home"?home():away(),fall:0,fallDir:1,...o}; G.ents.push(e); return e; }
   function me(x,z,o={}){ const m=S.playerModel(); const p=S.get().profile; const e={team:"home",x,z,y:0,facing:"up",pose:"stand",anim:0,moving:0,fall:0,fallDir:1,ring:"#b7ff4c",label:((p&&p.name)||"SEN").toUpperCase(),...m,...o}; G.ents.push(e); return e; }
   function step(e,tx,tz,speed,dt){
@@ -44,7 +45,8 @@
   function startShot(first,keepRetry){
     if(!first) G.retry=(G.retry||0)+1; else if(!keepRetry) G.retry=0;
     G.shotId=(G.shotId||0)+1; G.shot=G.level.shots[G.si]; G.ents=[]; G.ball=null; G.props=[]; G.markers=[]; G.fx=[]; G.floaters=[]; G.pending=null; G.t=0; G.P={}; G.swipe=null; G.path=null; G.drawing=false; E.cheer=0;
-    G.phase="aim";
+    G.phase="aim"; E.fadeMarks&&E.fadeMarks();
+    if(G.level.stage==='college'&&G.shot.career&&G.si===2&&first) SFX.play('crowdBurst'); // ışıklar yanar
     ({pass:setupPass,target:setupTarget,fg:setupFG,punt:setupPunt,run:setupRun,tackle:setupTackle,dive:setupDive})[G.shot.type](G.shot);
     snapCamera();
     banner(first?`ATIŞ ${G.si+1}/${G.level.shots.length}`:"TEKRAR",G.shot.title,first?"#b7ff4c":"#fff",1.4);
@@ -55,7 +57,8 @@
     if(G.shot.career){ recordPlay(title); if(success) score=playScore(); window.FG_DDA&&FG_DDA.onPlay(success?((G.P.pressure||0)>.5?.6:1):0); }
     G.phase="result"; score=Math.round(clamp(score,0,100));
     G.pending={success,score,timer:success?1.7:1.6};
-    if(success){ SFX.play("cheer"); vibrate([40,30,60]); E.cheer=1; banner(title,msg,"#b7ff4c"); if(score>=95) G.perfects++; G.scores.push(score); }
+    if(G.P.sacked&&G.P.qb&&E.mark) E.mark(G.P.qb.x,G.P.qb.z);
+    if(success){ SFX.play("cheer"); vibrate([40,30,60]); E.cheer=1; banner(title,msg,"#b7ff4c"); if(title==='TOUCHDOWN!'&&G.level.final&&E.confetti) E.confetti(); if(score>=95) G.perfects++; G.scores.push(score); }
     else { SFX.play("fail"); vibrate([90]); G.lives--; banner(title,msg,"#ff7443"); }
     hud();
   }
@@ -63,7 +66,7 @@
     const p=G.pending; G.pending=null;
     if(p.throwAway){ startShot(false); return; }
     if(p.success){ G.si++; if(G.si<G.level.shots.length){ startShot(true); return; }
-      G.phase="done"; G.hooks.levelEnd&&G.hooks.levelEnd({success:true,stars:levelStars(),perfects:G.perfects,scores:G.scores,stats:G.matchStats}); return; }
+      G.phase="done"; if(G.level.final&&E.confetti) E.confetti(); G.hooks.levelEnd&&G.hooks.levelEnd({success:true,stars:levelStars(),perfects:G.perfects,scores:G.scores,stats:G.matchStats}); return; }
     if(G.lives<=0){ G.phase="done"; G.hooks.levelEnd&&G.hooks.levelEnd({success:false,shot:G.shot,stats:G.matchStats}); return; }
     startShot(false);
   }
@@ -256,7 +259,7 @@
       // Juke: ani yön değişimi savunmanın tahminini kısa süre dondurur (çeviklik süreyi uzatır).
       if(len>.3){const ang=Math.atan2(c.x,c.z);if(P.lastAng!=null){const dA=Math.abs(((ang-P.lastAng+Math.PI*3)%(Math.PI*2))-Math.PI);if(dA>1.0)P.jukeUntil=G.t+.18+.25*clamp((A('agility')-50)/50,0,1);}P.lastAng=ang;}
       const juking=G.t<(P.jukeUntil||0);
-      for(const d of [...P.defs,...P.rushers]){const sp=speed*df.pursuit*(d.star?1.05:1);if(!juking||!d.pp)d.pp=pursuitPoint(d,w,sp);step(d,d.pp.x,d.pp.z,sp,dt);d.pose=hyp(d,w)<2?'tackle':'stand';if(hyp(d,w)<.8&&G.t-P.catchAt>.35){w.fall=.6;SFX.play('hit');finishCarry('TACKLE');return;}}
+      for(const d of [...P.defs,...P.rushers]){const sp=speed*df.pursuit*(d.star?1.05:1);if(!juking||!d.pp)d.pp=pursuitPoint(d,w,sp);step(d,d.pp.x,d.pp.z,sp,dt);d.pose=hyp(d,w)<2?'tackle':'stand';if(hyp(d,w)<.8&&G.t-P.catchAt>.35){w.fall=.6;SFX.play('hit');E.mark&&E.mark(w.x,w.z);finishCarry('TACKLE');return;}}
       if(w.z<=-50){finishCarry('TOUCHDOWN!');return;}if(!G.shot.goal&&w.z<=P.goalZ&&G.t-P.catchAt>1.4){finishCarry('FIRST DOWN!');return;}if(Math.abs(w.x)>=26.4){finishCarry('SAHA DIŞI');return;}if(w.z>P.z0+18||G.t-P.catchAt>14){finishCarry('OYUN BİTTİ');return;}
       return;
     }
@@ -579,7 +582,7 @@
       if(!window.__noRender){ const sh=G.shot, P=G.P;
         const los=sh.type==="tackle"?null:(sh.los||(sh.type==="run"?35:30));
         const fd=(sh.career||sh.type==="run")&&!sh.goal?los+sh.yards:null;
-        E.render({ents:G.ents,ball:G.ball,props:G.props,home:home(),away:away(),awayName:G.level.team.name,stage:G.level.stage||"camp",los,fd,markers:G.markers,
+        E.render({ents:G.ents,ball:G.ball,props:G.props,home:home(),away:away(),awayName:G.level.team.name,stage:G.level.stage||"camp",los,fd,markers:G.markers,progress:G.si/Math.max(1,G.level.shots.length-1),stunt:!!sh.goal&&G.phase!=='result',names:venueNames(),
           underlay:()=>{ if(sh.type==="punt"&&P.zoneZ) quadZ(P.zoneZ[0],P.zoneZ[1],"rgba(255,106,19,.38)"); if(sh.type==="tackle"){ quadZ(P.failZ-.12,P.failZ+.12,"rgba(255,214,0,.95)"); quadZ(P.losZ-.12,P.losZ+.12,"rgba(60,140,255,.95)"); } }},
           now/1000,()=>{ overlay(); drawFx(); drawBanner(); });
         if(Math.floor(now/250)!==Math.floor((now-dt*1000)/250)) hud(); }

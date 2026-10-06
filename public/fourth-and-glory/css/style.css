@@ -324,3 +324,4 @@ button[aria-busy="true"],button:disabled{cursor:default}
 #throwAwayAction[hidden]{display:none}
 .row select{background:#13283d;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit}
 @media(orientation:landscape) and (max-height:600px){#throwAwayAction{bottom:84px}}
+.node .hc-tag{position:absolute;left:calc(100% + 2px);top:16px;padding:2px 6px;border-radius:6px;background:#8c4a35;border:1px solid #e8dcc0;color:#f6ead0;font:900 8px/1.2 system-ui;letter-spacing:.12em;white-space:nowrap}

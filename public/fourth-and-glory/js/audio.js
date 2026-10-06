@@ -38,7 +38,14 @@
     cheer(){ noise(1.6,{vol:.28,freq:1100,q:.35,attack:.25}); noise(1.4,{vol:.18,freq:2600,q:.5,attack:.3,delay:.1}); [523,659,784,1046].forEach((f,i)=>tone(f,.22,{type:"square",vol:.06,delay:.05+i*.09})); },
     fail(){ tone(220,.28,{type:"sawtooth",vol:.1,slide:-80}); tone(160,.4,{type:"sawtooth",vol:.08,slide:-60,delay:.18}); noise(.8,{vol:.1,freq:500,q:.4,attack:.2}); },
     tick(){ tone(1400,.03,{type:"square",vol:.05}); },
-    coin(){ tone(988,.08,{type:"square",vol:.07}); tone(1319,.18,{type:"square",vol:.07,delay:.08}); }
+    coin(){ tone(988,.08,{type:"square",vol:.07}); tone(1319,.18,{type:"square",vol:.07,delay:.08}); },
+    // Bando fanfarı (kolej): üç notalı bakır + trampet.
+    fanfare(){ [[392,0],[523,.16],[659,.32],[784,.5]].forEach(([f,d],i)=>{ tone(f,i===3?.55:.18,{type:"sawtooth",vol:.07,delay:d}); tone(f/2,i===3?.55:.18,{type:"triangle",vol:.06,delay:d}); }); for(let i=0;i<6;i++) noise(.06,{vol:.18,freq:2400,q:.9,delay:i*.09}); },
+    crowdBurst(){ noise(2.2,{vol:.32,freq:900,q:.3,attack:.35}); noise(1.8,{vol:.2,freq:2200,q:.5,attack:.4,delay:.15}); },
+    // Paket sinematiği katmanları
+    riser(){ const a=ctx(); if(!a) return; tone(180,1.2,{type:"sawtooth",vol:.05,slide:700}); noise(1.2,{vol:.12,freq:1800,q:.6,attack:1.0}); },
+    impact(){ tone(55,.6,{vol:.5,slide:-20}); noise(.35,{vol:.5,freq:160,q:.7,type:"lowpass"}); },
+    shimmer(){ [1568,2093,2637,3136].forEach((f,i)=>tone(f,.5,{type:"sine",vol:.05,delay:i*.06})); }
   };
   window.FG_AUDIO={ play(name){ if(!enabled()) return; try{ sounds[name]&&sounds[name](); }catch(e){} }, unlock(){ ctx(); } };
 })();

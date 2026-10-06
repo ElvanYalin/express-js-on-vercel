@@ -44,11 +44,11 @@
     svg+=`<text x="${W/2}" y="44" font-family="Arial Black,Impact,Arial,Helvetica,sans-serif" font-weight="900" font-size="18" fill="${fin.trim}" text-anchor="middle" letter-spacing="4">ŞAMPİYONLUK</text>`;
     svg+=trophy(W/2,110);
     // Career environments behind the unchanged winding path.
-    const chapters=[{a:0,b:0,key:'camp',c:'#355e35'},{a:1,b:5,key:'college',c:'#164a49'},{a:6,b:6,key:'combine',c:'#46566a'},{a:7,b:9,key:'pro',c:'#203750'}];
+    const look=k=>window.FG_LOOK?.STAGES[k]?.mapTint,chapters=[{a:0,b:0,key:'camp',c:'#355e35'},{a:1,b:5,key:'college',c:look('college')||'#8a5a33',o:.28},{a:6,b:6,key:'combine',c:look('combine')||'#46566a'},{a:7,b:9,key:'pro',c:look('pro')||'#203750'}];
     chapters.forEach(ch=>{const top=pos[ch.b].y-STEP/2,bottom=pos[ch.a].y+STEP/2;
-      if(ch.key!=='camp')svg+=`<rect x="0" y="${top}" width="${W}" height="${bottom-top}" fill="${ch.c}" opacity=".7"/>`;
+      if(ch.key!=='camp')svg+=`<rect x="0" y="${top}" width="${W}" height="${bottom-top}" fill="${ch.c}" opacity="${ch.o||.7}"/>`;
       svg+=`<rect x="${W*.08}" y="${top+3}" width="${W*.84}" height="31" rx="8" fill="#0b1c2ad9"/><text x="${W/2}" y="${top+23}" text-anchor="middle" fill="#f4e7b7" font-family="Arial" font-size="12" font-weight="bold">${FG_CAREER.names[ch.key]}</text>`;
-      if(ch.key==='college'){for(let k=0;k<3;k++){const x=k%2?W-49:14,y=top+90+k*250;svg+=`<g transform="translate(${x},${y})"><rect width="32" height="66" fill="#c1b89f"/><path d="M-4 0L16 -15L36 0Z" fill="#47565f"/><path d="M7 8V52M16 8V52M25 8V52" stroke="#8d8574" stroke-width="5"/><path d="M16 -15V-47h27v16h-27" fill="${hc.jersey}" stroke="${hc.trim}" stroke-width="2"/></g>`;}}
+      if(ch.key==='college'){for(let k=0;k<3;k++){const x=k%2?W-49:14,y=top+90+k*250;svg+=`<g transform="translate(${x},${y})"><rect width="32" height="66" fill="#8c4a35"/><path d="M-4 0L16 -15L36 0Z" fill="#3d4a52"/><path d="M7 8V52M16 8V52M25 8V52" stroke="#e8dcc0" stroke-width="5"/><path d="M16 -15V-47h27v16h-27" fill="${hc.jersey}" stroke="${hc.trim}" stroke-width="2"/></g>`;}}
       if(ch.key==='pro'){for(let k=0;k<9;k++){const x=k%2?W-30:0,y=top+65+k*42;svg+=`<rect x="${x}" y="${y}" width="30" height="60" fill="#172b3b"/><path d="M${x+8} ${y+6}v43M${x+20} ${y+6}v43" stroke="#e9c36b" stroke-width="3" stroke-dasharray="4 7"/>`;}}
     });
     // yol
@@ -69,6 +69,7 @@
       html+=`<button class="node ${cls}" data-level="${l.id}" style="left:${p.x}px;top:${p.y}px" aria-label="Seviye ${l.id}">
         ${st?`<div class="stars">${[1,2,3].map(k=>starSvg(k<=st)).join("")}</div>`:""}
         ${current?`<div class="flag"><i></i><b>${l.id}</b></div>`:""}
+        ${l.id===2&&!st?`<span class="hc-tag">HOMECOMING</span>`:""}
         <div class="puck"><div class="num">${l.id}</div></div>
         ${!unlocked?`<span class="lock">🔒</span>`:""}
         ${crest(l.team).replace('class="crest"','class="crest"')}

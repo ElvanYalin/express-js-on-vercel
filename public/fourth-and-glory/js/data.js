@@ -14,7 +14,7 @@
       { type:"fg", title:"Kısa vuruş", desc:"20 yard'dan direklerin arasından.", los:97 },
       { type:"run", title:"Boşluğu bul", desc:"Yolunu çiz, dummy'lere çarpmadan 6 yard koş.", yards:6, def:[{x:-1.5,d:3,kind:"dummy"},{x:2.5,d:4,kind:"dummy"}] }
     ]},
-    { id:2, team:T("Metro Wolves","WLV","Şehir Işıkları",kit("#3a3f5c","#b493ff",{pants:"#c9cbd6"})), shots:[
+    { id:2, team:T("Riverside State Wolves","RSW","Homecoming",kit("#2f3a4a","#c9a46a",{pants:"#d9d2bf",pantsStripe:"#2f3a4a",helmet:"#2f3a4a",stripe:"#c9a46a"})), shots:[
       { type:"pass", title:"Hareketli hedef", desc:"Koşan receiver'ın önüne at.", wr:[{x:-12,d:10,patrol:[[-12,10],[4,10]],spd:5}], def:[] },
       { type:"target", title:"Kayan lastik", desc:"Sağa sola kayan lastiği vur.", hoops:[{x:0,d:14,y:2.4,r:1.3,amp:5,spd:1.2}] },
       { type:"tackle", title:"İlk tackle", desc:"Koşucunun önüne kaydır, dalarak durdur.", yards:8, path:[[0,-12],[2,-4],[3,6]], spd:5.2 },
