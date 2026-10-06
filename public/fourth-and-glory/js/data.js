@@ -169,7 +169,7 @@
 
   Object.assign(ATTR,{mediumAcc:{name:'Orta mesafe isabet',group:'Quarterback',effect:'10–25 yard pas kontrolü'},throwOnRun:{name:'Hareketli pas',group:'Quarterback',effect:'Koşarken pas sapmasını azaltır'},pocketPresence:{name:'Cep farkındalığı',group:'Quarterback',effect:'Baskının isabete etkisini azaltır'},clutch:{name:'Kritik anlar',group:'Quarterback',effect:'Red zone isabetini destekler'},releaseSpeed:{name:'Top çıkarma',group:'Quarterback',effect:'Pasın elden çıkma süresini azaltır'}});
   const BUILDS={balanced:{name:'Dengeli QB',bonus:{shortAcc:3,mediumAcc:3,awareness:3}},pocket:{name:'Pocket Passer',bonus:{shortAcc:5,pocketPresence:5,releaseSpeed:3}},arm:{name:'Strong Arm',bonus:{throwPower:6,deepAcc:5}},mobile:{name:'Mobile QB',bonus:{speed:6,agility:5,throwOnRun:4}},improviser:{name:'Improviser',bonus:{throwOnRun:6,awareness:4,clutch:4}}};
-  window.FG_DATA={ version:"0.7.0", BUILDS, kit, levels, ATTR, POSITIONS, SHOT_INFO, items, CATS, SETS, PACKS, DUP,
+  window.FG_DATA={ version:"0.8.0", BUILDS, kit, levels, ATTR, POSITIONS, SHOT_INFO, items, CATS, SETS, PACKS, DUP,
     homeKit:kit("#0c1a33","#ff6a13",{cleats:"#0c1a33",gloves:"#0c1a33"}),
     skins:["#f1c9a0","#e0ac7e","#d9a27c","#c68b5e","#9c6a43","#7b4b2a","#5a3a22"],
     hairs:[["short","Kısa"],["fade","Fade"],["long","Uzun"],["dreads","Rasta"],["bald","Kel"]],

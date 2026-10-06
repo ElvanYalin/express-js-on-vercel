@@ -1,6 +1,17 @@
-# Fourth & Glory — Road to Glory v0.7
+# Fourth & Glory — Road to Glory v0.8
 
 Amerikan futbolu kariyer prototipi. QB oynanışı ana oyundur; ayrı bir QB modu yoktur. Mevcut 10 düğümlü harita, navigasyon, paketler, soyunma odası ve ilerleme düzeni korunur. Oynanış ve kariyer bunların içine eklenir.
+
+## v0.8'de neler değişti
+
+Ayrıntılı gerekçe ve ölçümler: depo kökündeki `docs/fourth-and-glory/IYILESTIRME_PLANI.md`.
+
+- **Seçim ekranı ve menüler:** `js/ui-state.js` tek aktif ekranı, açık katman yığınını ve ekrana bağlı zamanlayıcıları yönetir. Seviye sonucu anında kaydedilir; kart gösterimi iptal edilebilir. Kariyer kapısı her zaman haritada açılır. Önizlemeler tek WebGL bağlamını paylaşır. Karakter sekmeleri telefon boyutunda artık tıklanabilir. Esc en üstteki katmanı kapatır.
+- **Zorluk:** Eski sürümde play'ler tamamen deterministikti; başarısız bir play birebir aynı haliyle tekrar ediliyor ve ezberlenebiliyordu. `js/difficulty.js` seviye bazlı veri tablosu, Rookie/Pro/All-Pro/Glory ön ayarları ve ±%8 bantlı uyarlanabilir zorluk içerir. Tekrar denemelerde rota varyantı değişir. Paslarda isabet konisi, çekişmeli yakalama ve görüş mesafesine bağlı topa kırılma vardır. Oyun saati uygulanır ve play başına bir kez top dışarı atılabilir. Favori hedefe çift koruma uygulanır, takipte önden kesme ve juke vardır. Yıldızlar performans puanından gelir.
+- **Görünüm:** `js/stage-look.js`, aşama başına gökyüzü, güneş, sis, pozlama ve harita tonunu tek kaynaktan verir. Gökyüzü kubbesindeki güneş, ışığın yönüyle aynıdır. Forma çakışmasında rakip beyaz forma giyer.
+- **Seviye 2 (Homecoming):** Altın saatte at nalı kolej stadyumu, açık uçta tuğla kampüs ve saat kulesi var. Orta sahada okul monogramı, öğrenci tribünü kart gösterisi, bando ve pankartlar bulunuyor. Işıklar 3. play'de yanar.
+- **Stadyum:** Statik kutular renk başına tek InstancedMesh'tir. Seyirci ve bench, instance başına shader animasyonuyla topa ve olaylara tepki verir. Gece flaşları, projektör parlaması, zincir ekibi, çim izleri, şampiyonluk konfetisi ve görüş açısına bağlı çim şeritleri eklendi. Kalite ayarı Otomatik/Düşük/Orta/Yüksek'tir; Yüksek'te gerçek gölge vardır.
+- **Karakter ve paketler:** Kamera çekimleri sekmeye ve kategoriye göre yaylı geçişle değişir. Stüdyo ışığı, ortam yansıması ve zemin gölgesi eklendi. Eşya takılınca nadirlik renginde parıltı ve kısa bir jest oynar. Paket açılımı 5 aşamalıdır; "Atla" her an sonuca gider.
 
 ## Başlatma
 
@@ -20,7 +31,9 @@ Bilgisayar: `http://localhost:8080`. Aynı ağdaki telefon: `http://BILGISAYARIN
 4. Sahada kaydırarak seçili receiver'ın önüne küçük yön düzeltmesi yapabilirsin. Kaydırırken zaman yavaşlar; basit düğme kontrolünde ayrıca çizgi çizmek gerekmez.
 5. Soldaki kontrol QB'yi hareket ettirir. Hücum çizgisini geçersen pas seçeneği kapanır, QB koşusuna geçilir.
 6. Receiver yakalayınca kontrol ona geçer. Kontrolü bırakırsan ileri koşar; yön vererek savunmadan uzaklaş. Kısa görevlerde hedef mesafe geçildikten sonra kısa koşuyla oyun tamamlanır. TD görevlerinde end zone gerekir.
-7. Bilgisayarda WASD/oklar: hareket. 1–5: receiver seçimi. Boşluk: snap/pas. Ekrandaki duraklatma düğmesi oyunu dondurur.
+7. Bilgisayarda WASD/oklar: hareket. 1–5: receiver seçimi. Boşluk: snap/pas. Esc: duraklat / katmanı kapat. Ekrandaki duraklatma düğmesi oyunu dondurur.
+8. TOPU AT DIŞARI: Cep çökerken play başına bir kez kullanılır. Can kaybı olmaz, play yeni bir varyantla tekrarlanır, performans puanı düşer.
+9. Sağ üstteki saat dolarsa (Seviye 3'ten itibaren) savunma QB'ye ulaşır. Ayarlar → Zorluk ve Uyarlanabilir zorluk ile seviye ayarlanabilir.
 
 ## Kariyer
 
@@ -81,13 +94,17 @@ Ayarlar → Kaydı dışa aktar / içe aktar ile JSON yedeği alınabilir. Taray
 - `js/ui.js`, `js/career-ui.js`, `js/map.js`: mevcut ekranlar ve eklenen kariyer bileşenleri.
 - `js/stadium.js`, `js/gl3d-enhanced.js`, `js/engine.js`: ortak 3D saha ve yedek çizici.
 - `js/athlete-model.js`, `js/athlete-game.js`, `js/preview.js`: iskeletli model ve önizleme.
-- `tests/`: Node ile çalışan testler; harici npm kurulumu gerekmez.
+- `js/ui-state.js`, `js/difficulty.js`, `js/stage-look.js`: UI durum makinesi, zorluk tablosu + DDA, aşama görünümü.
+- `tests/`: Node ile çalışan testler; `e2e.mjs` dışındakiler harici npm kurulumu gerektirmez.
 
 ```sh
 node tests/gameplay.cjs
 node tests/career.cjs
 node tests/models.cjs
 node tests/ui.cjs
+node tests/contrast.cjs     # forma kontrastı ve kolej görünümü
+node tests/balance.cjs      # bot tabanlı zorluk eğrisi (~4–5 dk); --report yalnızca tabloyu yazar
+node tests/e2e.mjs          # gerçek Chromium: UI zamanlama/durum hataları (playwright gerekir)
 ```
 
 Testler mantık, kayıt, model değişimi ve arayüz olaylarını kontrol eder. Gerçek GPU görüntüsü ve iOS/Android dokunmatik performansı bu ortamda ölçülmemiştir. Detaylar `TEST_SONUCLARI.txt` içindedir.

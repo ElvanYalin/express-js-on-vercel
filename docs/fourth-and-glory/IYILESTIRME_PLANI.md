@@ -6,6 +6,23 @@
 
 ---
 
+## Uygulama durumu (v0.8)
+
+Plan, `public/fourth-and-glory/` altındaki oyuna uygulandı (yayında `/fourth-and-glory/index.html`). Ölçümler `TEST_SONUCLARI.txt` dosyasında. Plandan sapmalar ve yeni bulgular:
+
+| Konu | Durum |
+|---|---|
+| B1, B2/B3, B6, B7 | Düzeltildi. E2E testi v0.7'de başarısız, v0.8'de geçiyor. |
+| B4 (çift dokunuş), B5 (PAS AT gecikmesi) | **Plandaki tespit abartılıydı**: v0.7'de yeniden üretilemedi (ekran anında değiştiği için ikinci dokunuş girişe düşüyor; snap arayüzü zaten doğrudan güncelliyor). Korumalar yine de eklendi, çünkü yeni geçiş animasyonları bu riskleri gerçek kılıyor. |
+| B8 | Yanlış tespitti (`unlocked` 10'da sınırlanıyor); plandan çıkarıldı. |
+| **B10 (yeni)** | Karakter oluşturma sekmeleri telefon boyutunda **hiç tıklanamıyordu**: grid satırı, `overflow-x:auto` sekme şeridi yüzünden eziliyordu. Düzeltildi, E2E testi eklendi. |
+| Zorluğun kök nedeni | §2.1'deki parametrelere ek olarak asıl neden: **play'ler tamamen deterministikti.** Başarısız bir play birebir aynı haliyle tekrarlandığı için çözüm ezberleniyordu. Tohumlanabilir rastgelelik ve tekrar varyantları eklendi. |
+| Zorluk ayarı | §2.3 tablosuna seviye çarpanı `k` eklendi ve botlarla hedef eğriye ayarlandı (tablodaki ham değerler oyunu fazla zorlaştırıyordu). Ayrıca §2.5'e göre iki düzeltme yapıldı: Topa yalnızca hedefi kollayan ya da iniş noktasını *görebilen* savunmacı kırılır (`vision`), ve receiver'ın yanındaki savunmacı artık otomatik INT değil çekişmeli top üretir. |
+| Forma kontrastı | Rakip forması ile ev forması arasında ≥3:1 uygulandı (kural gereği rakiplerin çoğu beyaz deplasman formasıyla çıkıyor). "Çime karşı ≥3:1" koşulu uygulanmadı: koyu formaların hiçbiri bunu sağlamıyor, gerçek sahada da sağlamıyor. |
+| Güneş yönü (Level 2) | "Kameranın arkası" yerine sol-ön (az −105°) kullanıldı: uzun gölgeler sahayı enine keser, ufuktaki altın hale görünür. |
+| Paket kartları | WebGL düzlemleri yerine GPU hızlandırmalı CSS 3D + holografik konik degrade kullanıldı. 5 aşama, Atla ve azaltılmış hareket desteği plandaki gibi. |
+| Yapılmayanlar | Yağmur seçeneği, ekran uzayı lens flare (yerine projektör parlama sprite'ı var), `popstate` ile geri tuşu (yerine Esc). |
+
 ## 0. Yönetici özeti
 
 | # | Alan | Kök neden (tek cümle) | Öncelik | Efor |

@@ -1,16 +1,21 @@
-Fourth & Glory v0.7 — 2026-10-04
+Fourth & Glory v0.8 — 2026-10-06
 
-GEÇTİ: Eski 41 antrenman görevi; vuruş/pas/koşu/tackle/dalış çözümleri.
-GEÇTİ: Yeni 40 kariyer görevinin her birinde temel özelliklerle başarılı çözüm.
-GEÇTİ: 11v11, hareketli savunma, receiver seçimi, QB hareketi, scramble, fiziksel sack.
-GEÇTİ: Snap öncesi bekleme, duraklatma, dokunma iptali.
-GEÇTİ: Üniversite ve draft seçim kapıları, tekrar ödül/istatistik koruması.
-GEÇTİ: Kayıt dışa/içe aktarımı, bozuk veri reddi, antrenman izolasyonu.
-GEÇTİ: 18 bağımsız iskeletli oyuncu, 11 poz, sonlu kemik dönüşümleri, kamera eşleşmesi.
-GEÇTİ: 50 ardışık görünüm değişiminde aynı geometri/model/iskelet kullanımı.
-GEÇTİ: Dört 3D stadyum aşamasının sahne ağacı ve dönüşüm değerleri.
-GEÇTİ: Gerçek UI işleyicileriyle oluşturma → harita → maç → snap/pas → üniversite seçimi; oyuncu kartı, paket atlama ve antrenman geçişi.
+GEÇTİ: tests/career.cjs — 40 QB görevinin her biri kazanılabilir (top taşıyıcı savunmadan kaçarak), 11v11, kapılar, kayıt.
+GEÇTİ: tests/gameplay.cjs — 41 antrenman görevi, fiziksel sack, tekrar ödülü koruması, kayıt dışa/içe aktarımı.
+GEÇTİ: tests/models.cjs — 18 iskeletli oyuncu, 11 poz; dört stadyum aşaması (batch'lenmiş InstancedMesh, <70 grup).
+GEÇTİ: tests/ui.cjs — gerçek işleyicilerle menü akışı (DOM adaptörü).
+GEÇTİ: tests/contrast.cjs — 28 takım kombinasyonunda forma kontrastı ≥ 3:1; kolej altın saat görünümü.
+GEÇTİ: tests/balance.cjs — N=50, deterministik tohum. Seviye ilk denemede bitirme oranı:
+         Seviye     1    2    3    4    5    6    7    8    9   10
+         hedef     90%  80%  70%  60%  62%  50%  70%  55%  45%  38%
+         ortalama  94%  80%  78%  60%  66%  62%  76%  62%  50%  36%   (±15 tolerans içinde)
+         uzman    100% 100% 100%  96%  94%  84%  94%  88%  78%  68%
+         acemi     38%  16%  14%   8%   4%   4%  10%   4%   4%   4%
+       Karşılaştırma: v0.7'de aynı "ortalama" bot 10 seviyenin hepsini %75–100 ilk denemede geçiyordu.
+GEÇTİ: tests/e2e.mjs — Chromium (SwiftShader) üzerinde B1, B2/B3, B4, B5, B6, B7, B10.
+       v0.7'ye karşı çalıştırıldığında B1, B2, B6, B7 ve B10 BAŞARISIZ olur (hatalar gerçekti);
+       B4 ve B5 v0.7'de de geçer (plandaki bu iki tespit abartılıydı, korumalar yine de eklendi).
 
-Sınır: UI testleri küçük bir DOM adaptörüyle, 3D testleri CPU üzerinde yürütülür.
-Bunlar gerçek tarayıcı ekran görüntüsü veya GPU doğrulaması değildir.
-Telefon FPS/bellek, Safari/Android görünümü ve dokunmatik ergonomi cihazda denenmelidir.
+Sınır: Görsel kontroller SwiftShader (yazılımsal GPU) ekran görüntüleriyle yapıldı; burada kare hızı ~1–2 FPS'tir
+ve v0.7 ile aynı düzeydedir. Gerçek telefon FPS/bellek, Safari/Android görünümü ve dokunmatik ergonomi cihazda denenmelidir.
+Bot tabanlı denge, insan oyuncunun yaklaşık bir modelidir; oyun testleriyle doğrulanmalıdır.
