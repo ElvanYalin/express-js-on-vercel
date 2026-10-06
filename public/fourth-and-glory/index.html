@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0b1a12" />
+  <title>Fourth & Glory — Road to Glory</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23ff6a13%22/%3E%3Ctext x=%2232%22 y=%2242%22 font-size=%2228%22 font-weight=%22900%22 text-anchor=%22middle%22 font-family=%22Arial%22 fill=%22%23fff%22%3E4G%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ============ KARAKTER OLUŞTURMA ============ -->
+  <section id="creatorScreen" class="screen creator">
+    <div class="creator-stage">
+      <canvas id="creatorCanvas" class="preview-canvas"></canvas>
+      <div class="creator-head"><small>ROAD TO GLORY</small><h1 id="creatorTitle">OYUNCUNU YARAT</h1></div>
+      <div class="helmet-toggle seg"><button id="helmetOn" class="on">Kask</button><button id="helmetOff">Yüz</button></div>
+      <div class="creator-badge"><b id="crNumBadge">12</b><small id="crPosBadge">QB</small></div>
+    </div>
+    <div class="creator-panel">
+      <div class="tabs" id="crTabs"><button data-tab="id" class="on">Kimlik</button><button data-tab="look">Görünüm</button><button data-tab="body">Fizik</button><button data-tab="acc">Aksesuar</button></div>
+      <div class="tab-body" data-body="id">
+        <label class="field"><span>İsim</span><input id="crName" maxlength="14" value="ROOKIE" /></label>
+        <div class="field"><span>Forma numarası</span><div class="num-row"><button class="step" data-num="-1">−</button><b id="crNum">12</b><button class="step" data-num="1">+</button></div></div>
+        <div class="field"><span>Pozisyon</span><div class="chips" id="crPos"></div><small class="note" id="crPosNote"></small></div>
+        <div class="field"><span>Gelişim tarzı</span><div class="chips" id="crBuild"></div></div>
+        <div class="field"><span>Pas stili</span><div class="chips" id="crThrow"><button data-v="classic">Klasik</button><button data-v="compact">Kompakt</button><button data-v="overhand">Yüksek kol</button></div></div><div class="field"><span>Duruş</span><div class="chips" id="crStance"><button data-v="balanced">Dengeli</button><button data-v="wide">Geniş taban</button></div></div>
+        <div class="field"><span>Güçlü el</span><div class="chips" id="crHand"><button data-hand="R" class="on">Sağ</button><button data-hand="L">Sol</button></div></div>
+      </div>
+      <div class="tab-body" data-body="look" hidden>
+        <div class="field"><span>Yüz yapısı</span><div class="chips" id="crFace"><button data-v="natural">Doğal</button><button data-v="angular">Keskin</button><button data-v="broad">Geniş</button></div></div>
+        <div class="field"><span>Ten rengi</span><div class="swatches" id="crSkin"></div></div>
+        <div class="field"><span>Saç</span><div class="chips" id="crHair"></div></div>
+        <div class="field"><span>Saç rengi</span><div class="swatches" id="crHairColor"></div></div>
+        <div class="field"><span>Sakal</span><div class="chips" id="crBeard"></div></div>
+      </div>
+      <div class="tab-body" data-body="body" hidden>
+        <label class="field"><span>Boy <b id="crHeightLbl">1,88 m</b></span><input type="range" id="crHeight" min="0" max="100" value="55" /></label>
+        <label class="field"><span>Kilo <b id="crWeightLbl">98 kg</b></span><input type="range" id="crWeight" min="0" max="100" value="50" /></label>
+      </div>
+      <div class="tab-body" data-body="acc" hidden>
+        <div class="field"><span>Başlangıç aksesuarları (en fazla 2)</span><div class="chips" id="crAcc"></div></div>
+      </div>
+      <button id="crStart" class="cta">KARİYERE BAŞLA</button>
+    </div>
+  </section>
+
+  <!-- ============ HARİTA ============ -->
+  <section id="mapScreen" class="screen">
+    <div id="mapScroll" class="map-scroll"><div id="mapField" class="map-field"></div></div>
+    <div class="map-top">
+      <div class="wallet">
+        <div class="coin-chip"><span class="coin-ico">$</span><b id="cashCount">0</b></div>
+        <div class="coin-chip dp"><span class="coin-ico dp">DP</span><b id="dpCount">0</b></div>
+      </div>
+      <div class="map-title"><b>FOURTH &amp; GLORY</b><small>ROAD TO GLORY</small></div>
+      <button id="settingsBtn" class="round-btn" aria-label="Ayarlar"><svg viewBox="0 0 24 24"><path fill="#9fd3ff" d="M19.4 13a7.5 7.5 0 000-2l2.1-1.6-2-3.5-2.5 1a7.6 7.6 0 00-1.7-1L15 3h-4l-.4 2.7a7.6 7.6 0 00-1.7 1l-2.5-1-2 3.5L6.5 11a7.5 7.5 0 000 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.7c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5A3.5 3.5 0 1113 8.5a3.5 3.5 0 010 7z"/></svg></button>
+    </div>
+    <div class="side-dock">
+      <button id="playerBtn" class="dock-btn"><span class="ovr" id="dockOvr">62</span><b>Oyuncum</b></button>
+      <button id="packsBtn" class="dock-btn"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v9l-8 4-8-4z" fill="#ffc83d" stroke="#7a4d00" stroke-width="1.2"/><path d="M4 8l8 4 8-4M12 12v9" stroke="#7a4d00" stroke-width="1.2" fill="none"/></svg><b>Paketler</b><i id="packBadge" class="badge">1</i></button>
+      <button id="lockerBtn" class="dock-btn"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 2-1v11h10V10l2 1 2-5-5-3c-.5 1.7-2 3-4 3S8.5 4.7 8 3z" fill="#fff"/></svg><b>Soyunma</b></button>
+    </div>
+    <button id="playBtn" class="play-btn">OYNA · SEVİYE 1</button>
+  </section>
+
+  <!-- ============ OYUN ============ -->
+  <section id="gameScreen" class="screen">
+    <div id="stage" class="stage"></div>
+    <div class="hud">
+      <button id="pauseBtn" class="hud-round" aria-label="Duraklat"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1" fill="#fff"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#fff"/></svg></button>
+      <div class="scoreboard">
+        <div class="sb-team"><span id="sbHomeCrest" class="crest">G</span></div>
+        <div class="sb-mid"><b id="sbShot">1/4</b><small>ATIŞ</small></div>
+        <div class="lives" id="lives"><i></i><i></i><i></i></div>
+        <div class="sb-team"><span id="sbAwayCrest" class="crest">H</span></div>
+      </div>
+      <div class="gameday"><small>SEVİYE</small><b id="gdLabel">1 · QB</b></div>
+      <div class="mission-panel">
+        <small id="mpKicker">QB · PAS</small>
+        <h2 id="mpTitle">İlk pas</h2>
+        <p id="mpDesc">Açıktaki receiver'ı bul.</p>
+      </div>
+      <div id="passPanel" class="pass-panel">
+        <button data-pass="bullet"><b>BULLET</b><small>Hızlı</small></button>
+        <button data-pass="touch" class="on"><b>TOUCH</b><small>Dengeli</small></button>
+        <button data-pass="lob"><b>LOB</b><small>Yüksek</small></button>
+      </div>
+      <div id="hint" class="hint"></div>
+      <div id="qbControls" hidden><div id="receiverChoices" aria-label="Receiver seçimi"></div>
+        <div id="movePad" aria-label="Hareket kontrolü"><span id="moveKnob"></span><small>HAREKET</small></div>
+        <button id="snapAction" class="cta">SNAP · BAŞLAT</button><button id="passAction" class="cta">PAS AT</button><button id="throwAwayAction" class="ghost">TOPU AT DIŞARI</button>
+        <div id="carryNote">TOP SENDE · YÖN VER<br><small>Kontrolü bırakırsan ileri koşar.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KATMANLAR ============ -->
+  <div id="introOverlay" class="overlay intro">
+    <div class="intro-band"><h1 id="introTitle">SEVİYE 1</h1><p id="introVenue">Antrenman Kampı</p></div>
+    <div class="intro-card">
+      <div class="vs-row">
+        <div class="vs-team"><span id="introHomeCrest" class="crest big">G</span><b>GLORY</b></div>
+        <div class="vs">VS</div>
+        <div class="vs-team"><span id="introAwayCrest" class="crest big">H</span><b id="introAwayName">HARBOR HAWKS</b></div>
+      </div>
+      <div id="introStars" class="stars-row"></div>
+      <ol id="introMissions" class="intro-missions"></ol>
+      <p class="intro-note">3 canın var. Kaçırdığın her atış bir can götürür; kalan can sayısı yıldızını belirler.</p>
+      <button id="introStart" class="cta">BAŞLA</button>
+      <button id="introBack" class="link-btn">← Haritaya dön</button>
+    </div>
+  </div>
+
+  <div id="endOverlay" class="overlay end">
+    <div class="end-card">
+      <small id="endKicker">SEVİYE 1</small>
+      <h1 id="endTitle">TAMAMLANDI!</h1>
+      <div id="endStars" class="big-stars"></div>
+      <div id="endRewards" class="rewards"></div>
+      <button id="endPrimary" class="cta">PAKETİ AÇ</button>
+      <button id="endSecondary" class="link-btn">Haritaya dön</button>
+    </div>
+  </div>
+
+  <div id="pauseOverlay" class="overlay small">
+    <div class="sheet">
+      <h2>Duraklatıldı</h2>
+      <button id="resumeBtn" class="cta">DEVAM ET</button>
+      <button id="howBtn" class="ghost">Bu atış nasıl yapılır?</button>
+      <button id="restartBtn" class="ghost">Seviyeyi yeniden başlat</button>
+      <button id="quitBtn" class="ghost">Haritaya dön</button>
+    </div>
+  </div>
+
+  <div id="playerOverlay" class="overlay small">
+    <div class="sheet wide player-sheet">
+      <div class="sheet-head"><h2 id="plName">ROOKIE</h2><button class="x" data-close>×</button></div>
+      <div class="player-top">
+        <canvas id="playerCanvas" class="preview-canvas small"></canvas>
+        <div class="player-meta">
+          <div class="ovr-big"><b id="plOvr">62</b><small>OVR</small></div>
+          <div class="career-team" id="careerTeam"></div><small id="careerRole"></small><div class="meta-row"><span>Pozisyon</span><b id="plPos">QB</b></div>
+          <div class="meta-row"><span>Numara</span><b id="plNum">#12</b></div>
+          <div class="meta-row dp"><span>Gelişim puanı</span><b id="plDp">0 DP</b></div>
+          <button id="editLookBtn" class="ghost sm">Görünümü düzenle</button>
+        </div>
+      </div>
+      <div id="qbStats" class="qb-stats"></div><details class="career-history"><summary>Kariyer geçmişi ve başarılar</summary><ol id="careerHistory"></ol></details><details class="career-history"><summary>Sezon programı</summary><ol id="seasonSchedule"></ol></details><button id="trainingBtn" class="ghost">Serbest antrenman</button>
+      <p class="sheet-note">DP; seviyelerden ve paketlerden gelir. Her yükseltme bir öncekinden pahalıdır: 99'a ulaşmak uzun sürer.</p>
+      <div id="attrList" class="attr-list"></div>
+    </div>
+  </div>
+
+  <div id="packsOverlay" class="overlay small">
+    <div class="sheet wide">
+      <div class="sheet-head"><h2>Paketler</h2><button class="x" data-close>×</button></div>
+      <h3>Sende olanlar</h3><div id="packInv" class="pack-grid"></div>
+      <h3>Mağaza</h3><div id="packShop" class="pack-grid"></div>
+      <p class="sheet-note">Paketlerden kozmetik ve gelişim puanı çıkar. Ekipman sadece görünüştür, oyuncuyu güçlendirmez. Aynı eşya tekrar çıkarsa cash'e dönüşür.</p>
+    </div>
+  </div>
+
+  <div id="lockerOverlay" class="overlay small">
+    <div class="sheet wide locker">
+      <div class="sheet-head"><h2>Soyunma Odası</h2><button class="x" data-close>×</button></div>
+      <div class="locker-top">
+        <canvas id="lockerCanvas" class="preview-canvas small"></canvas>
+        <div class="locker-cats" id="lockerCats"></div>
+      </div>
+      <div class="locker-count" id="lockerCount"></div>
+      <div id="lockerGrid" class="item-grid"></div>
+      <h3>Koleksiyonlar</h3><div id="setList" class="set-list"></div>
+    </div>
+  </div>
+
+  <div id="openOverlay" class="overlay open">
+    <div class="open-stage">
+      <small id="openKicker">RARE PACK</small>
+      <div id="packTunnel" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div id="packSeal" aria-hidden="true"><span>4G</span><small>PLAYER DEVELOPMENT</small></div>
+      <div id="packTease" aria-live="polite"></div>
+      <div id="cardRow" class="card-row"></div>
+      <div id="openSets" class="open-sets"></div>
+      <button id="openTry" class="ghost" hidden>SOYUNMA ODASINDA DENE</button>
+      <button id="openDone" class="cta">TAMAM</button>
+      <button id="openSkip" class="link-btn">Atla</button>
+    </div>
+  </div>
+
+  <div id="settingsOverlay" class="overlay small">
+    <div class="sheet">
+      <div class="sheet-head"><h2>Ayarlar</h2><button class="x" data-close>×</button></div>
+      <label class="row"><span>Ses efektleri</span><input type="checkbox" id="setSound" /></label>
+      <label class="row"><span>Titreşim</span><input type="checkbox" id="setVib" /></label>
+      <label class="row"><span>Nişan çizgisi ve ipuçları</span><input type="checkbox" id="setGuide" /></label>
+      <label class="row"><span>Zorluk</span><select id="setDifficulty"><option value="rookie">Rookie</option><option value="pro">Pro</option><option value="allpro">All-Pro</option><option value="glory">Glory</option></select></label>
+      <label class="row"><span>Uyarlanabilir zorluk</span><input type="checkbox" id="setAdaptive" /></label>
+      <label class="row"><span>Grafik kalitesi</span><select id="setQuality"><option value="auto">Otomatik</option><option value="low">Düşük</option><option value="medium">Orta</option><option value="high">Yüksek</option></select></label>
+      <button id="exportSaveBtn" class="row">Kaydı dışa aktar</button>
+      <label class="row">Kaydı içe aktar<input id="importSaveFile" type="file" accept=".json,application/json" /></label>
+      <button id="resetBtn" class="danger">İlerlemeyi sıfırla</button>
+    </div>
+  </div>
+
+  <div id="careerOverlay" class="overlay small"><div class="sheet wide"><div class="sheet-head"><h2 id="careerTitle"></h2><button id="careerClose" class="x">×</button></div><p id="careerText" class="sheet-note"></p><div id="careerOptions"></div></div></div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/stage-look.js"></script>
+  <script src="js/difficulty.js"></script>
+  <script src="js/career.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/athlete.js"></script>
+  <script src="js/gl3d.js"></script>
+  <script src="js/three.js"></script>
+  <script src="js/athlete-model.js"></script>
+  <script src="js/athlete-game.js"></script>
+  <script src="js/stadium.js"></script>
+  <script src="js/gl3d-enhanced.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/ui-state.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/career-ui.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
