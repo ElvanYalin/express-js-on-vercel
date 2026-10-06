@@ -38,6 +38,11 @@ async function scenario(name, fn) {
 const shown = (page, id) => page.evaluate(i => document.getElementById(i).classList.contains('show'), id);
 const active = (page, id) => page.evaluate(i => document.getElementById(i).classList.contains('active'), id);
 
+await scenario('B10 karakter sekmeleri telefon boyutunda tıklanabilir (grid satırı ezilmesi)', async page => {
+  await page.evaluate(() => FG_UI.openCreator(true)); await page.waitForTimeout(300);
+  for (const t of ['look', 'body', 'id']) { await page.click(`#crTabs [data-tab="${t}"]`, { timeout: 3000 }); assert.equal(await page.evaluate(x => document.querySelector(`.tab-body[data-body="${x}"]`).hidden, t), false); }
+});
+
 await scenario('B1 seviye sonu + hızlı çıkış: harita üstünde kart yok, ödül bir kez', async page => {
   await page.click('#playBtn'); await page.waitForTimeout(350); await page.click('#introStart');
   const cash0 = await page.evaluate(() => FG_STATE.get().cash);

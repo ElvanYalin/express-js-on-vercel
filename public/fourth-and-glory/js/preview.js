@@ -9,7 +9,7 @@
     full:  {x:0,   y:1.12,z:5.2,pitch:.03,fov:30,yaw:0},
     face:  {x:0,   y:1.86,z:1.75,pitch:.03,fov:24,yaw:0},
     helmet:{x:.12, y:1.86,z:2.2,pitch:.05,fov:26,yaw:-.55},
-    hands: {x:.32, y:1.12,z:2.1,pitch:.08,fov:26,yaw:.55},
+    hands: {x:.28, y:1.08,z:2.7,pitch:.08,fov:27,yaw:.55},
     feet:  {x:0,   y:.5,  z:2.5,pitch:.12,fov:28,yaw:.35},
     back:  {x:0,   y:1.42,z:3.3,pitch:.03,fov:30,yaw:Math.PI},
     hero:  {x:0,   y:.95, z:4.7,pitch:-.05,fov:32,yaw:-.25}
@@ -46,7 +46,7 @@
     if(v.canvas.width!==W||v.canvas.height!==H){ v.canvas.width=W; v.canvas.height=H; }
     R.resize(r.width,r.height,dpr);
     const target=SHOTS[v.shot]||SHOTS.full;
-    if(v.spin&&v.shot==="full"&&!v.drag) v.baseYaw+=dt*.42; else if(v.shot!=="full"&&!v.drag) v.baseYaw*=Math.pow(.02,dt);
+    if(v.spin&&(v.shot==="full"||v.shot==="hero")&&!v.drag) v.baseYaw+=dt*.42; else if(v.shot!=="full"&&v.shot!=="hero"&&!v.drag) v.baseYaw*=Math.pow(.02,dt);
     for(const k of KEYS){ [v.cam[k],v.vel[k]]=spring(v.cam[k],v.vel[k],target[k],9,dt); }
     v.look.x+=(v.lookT.x-v.look.x)*Math.min(1,dt*6); v.look.y+=(v.lookT.y-v.look.y)*Math.min(1,dt*6);
     v.glow=Math.max(0,v.glow-dt*2.2); v.gestureT+=dt;

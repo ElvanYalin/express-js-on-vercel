@@ -13,6 +13,7 @@
   const homeCrest=()=>({short:FG_CAREER.currentTeam(level?.id)?.short||"G",jersey:D.homeKit.jersey,trim:D.homeKit.trim});
   const swatch=v=>v===true?"#0b0b0b":v==="team"?D.homeKit.trim:(v||"transparent");
   const catName=c=>(D.CATS.find(x=>x[0]===c)||[c,c])[1];
+  const RAR_COLOR={common:"#9aa7b4",rare:"#3d8bff",epic:"#a65cff",legendary:"#ffc83d"};
 
   // ================= KARAKTER OLUŞTURMA =================
   let draft=null, editing=false;
@@ -23,7 +24,7 @@
   function refreshCreator(){
     for(const [id,key,def]of [["crFace","face","natural"],["crThrow","throwStyle","classic"],["crStance","stance","balanced"]])$$("#"+id+" button").forEach(b=>b.classList.toggle("on",b.dataset.v===(draft[key]||def)));
     $$("#crBuild button").forEach(b=>{b.classList.toggle("on",b.dataset.build===(draft.build||"balanced"));b.disabled=editing;});
-    FG_PREVIEW.show($("#creatorCanvas"),draftModel(),{zoom:draft._face?2:1});
+    FG_PREVIEW.show($("#creatorCanvas"),draftModel(),{shot:draft._shot||(draft._face?"face":"full"),glow:draft._glow||"#b7ff4c"});
     $("#crNum").textContent=draft.number; $("#crNumBadge").textContent=draft.number; $("#crPosBadge").textContent=draft.position;
     $("#crHeightLbl").textContent=`${(1.78+draft.height*.2).toFixed(2).replace(".",",")} m`; $("#crWeightLbl").textContent=`${Math.round(85+draft.weight*35)} kg`;
     $$("#crPos button").forEach(b=>b.classList.toggle("on",b.dataset.v===draft.position));
@@ -44,7 +45,9 @@
     $$("#crPos button").forEach(b=>b.disabled=editing); $('#crTabs [data-tab="acc"]').hidden=editing;
     show("creatorScreen"); selectTab("id"); refreshCreator();
   }
-  function selectTab(t){ $$("#crTabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t)); $$(".tab-body").forEach(b=>b.hidden=b.dataset.body!==t); }
+  // Sekme → kamera çekimi: Kimlik kahraman açısı, Görünüm yüz, Fizik ve Aksesuar tam boy.
+  function selectTab(t){ $$("#crTabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t)); $$(".tab-body").forEach(b=>b.hidden=b.dataset.body!==t);
+    if(draft){ draft._shot={id:"hero",look:"face",body:"full",acc:"full"}[t]||"full"; draft._face=t==="look"; refreshCreator(); } }
   function buildCreator(){
     $("#crBuild").innerHTML=Object.entries(D.BUILDS).map(([k,b])=>`<button data-build="${k}">${b.name}</button>`).join("");
     $$("#crBuild button").forEach(b=>b.onclick=()=>{draft.build=b.dataset.build;refreshCreator();});
@@ -57,16 +60,16 @@
     $("#crAcc").innerHTML=acc.map(([id,n])=>`<button data-v="${id}">${n}</button>`).join("");
     $$("#crTabs button").forEach(b=>b.onclick=()=>selectTab(b.dataset.tab));
     $$("#crPos button").forEach(b=>b.onclick=()=>{ draft.position=b.dataset.v; refreshCreator(); });
-    $$("#crHand button").forEach(b=>b.onclick=()=>{ draft.hand=b.dataset.hand; refreshCreator(); });
-    for(const [id,key]of [["crFace","face"],["crThrow","throwStyle"],["crStance","stance"]])$$("#"+id+" button").forEach(b=>b.onclick=()=>{draft[key]=b.dataset.v;draft._face=key==="face";refreshCreator();});
-    const face=(k)=>b=>{ b.onclick=()=>{ draft[k]=b.dataset.v; draft._face=true; refreshCreator(); }; };
+    $$("#crHand button").forEach(b=>b.onclick=()=>{ draft.hand=b.dataset.hand; draft._shot="hands"; refreshCreator(); });
+    for(const [id,key]of [["crFace","face"],["crThrow","throwStyle"],["crStance","stance"]])$$("#"+id+" button").forEach(b=>b.onclick=()=>{draft[key]=b.dataset.v;draft._face=key==="face";draft._shot=key==="face"?"face":"hero";refreshCreator();});
+    const face=(k)=>b=>{ b.onclick=()=>{ draft[k]=b.dataset.v; draft._face=true; draft._shot="face"; refreshCreator(); }; };
     $$("#crSkin button").forEach(face("skin")); $$("#crHair button").forEach(face("hair")); $$("#crHairColor button").forEach(face("hairColor")); $$("#crBeard button").forEach(face("beard"));
-    $$("#crAcc button").forEach(b=>b.onclick=()=>{ const v=b.dataset.v, g=draft.startGear||[]; if(g.includes(v)) draft.startGear=g.filter(x=>x!==v); else { if(g.length>=2) return toast("En fazla 2 aksesuar seçebilirsin."); draft.startGear=[...g,v]; } draft._face=false; refreshCreator(); });
+    $$("#crAcc button").forEach(b=>b.onclick=()=>{ const v=b.dataset.v, g=draft.startGear||[]; if(g.includes(v)) draft.startGear=g.filter(x=>x!==v); else { if(g.length>=2) return toast("En fazla 2 aksesuar seçebilirsin."); draft.startGear=[...g,v]; } const it=S.item(v); draft._face=false; draft._shot=it?FG_PREVIEW.shotFor(it.cat):"full"; draft._glow=it?RAR_COLOR[it.rarity]:null; refreshCreator(); });
     $$("[data-num]").forEach(b=>b.onclick=()=>{ draft.number=(draft.number+(+b.dataset.num)+100)%100; refreshCreator(); });
-    $("#crHeight").oninput=e=>{ draft.height=e.target.value/100; draft._face=false; refreshCreator(); };
-    $("#crWeight").oninput=e=>{ draft.weight=e.target.value/100; draft._face=false; refreshCreator(); };
-    $("#helmetOn").onclick=()=>{ draft._face=false; refreshCreator(); };
-    $("#helmetOff").onclick=()=>{ draft._face=true; refreshCreator(); };
+    $("#crHeight").oninput=e=>{ draft.height=e.target.value/100; draft._face=false; draft._shot="full"; refreshCreator(); };
+    $("#crWeight").oninput=e=>{ draft.weight=e.target.value/100; draft._face=false; draft._shot="full"; refreshCreator(); };
+    $("#helmetOn").onclick=()=>{ draft._face=false; draft._shot="helmet"; refreshCreator(); };
+    $("#helmetOff").onclick=()=>{ draft._face=true; draft._shot="face"; refreshCreator(); };
     $("#crName").oninput=e=>{ draft.name=e.target.value.toUpperCase().slice(0,14); };
     $("#crStart").onclick=()=>{ FG_AUDIO.unlock(); const p={...draft}; delete p._face; if(!String(p.name).trim()) p.name="ROOKIE"; if(editing) delete p.startGear;
       p.position="QB"; S.setProfile(p); FG_AUDIO.play("whistle"); openMap(); if(editing) openPlayer(); else toast("Kariyerin başladı! İlk paketin Paketler'de seni bekliyor."); };
@@ -161,22 +164,44 @@
   }
 
   // ================= PAKET AÇMA =================
+  // Sonuç animasyondan ÖNCE belirlenir (S.openPack); sinematik yalnızca sunumdur ve "Atla" her an son duruma gider.
+  // Aşamalar: 1 tünel girişi → 2 paket (dokun: yırt) → 3 nadirlik ipucu → 4 kartlar → 5 sonuç.
+  const ORDER={common:0,rare:1,epic:2,legendary:3};
+  const PHASES={common:[.6,.5,.4,0,0],rare:[.6,.5,.4,0,0],epic:[.8,.6,.9,.45,0],legendary:[1,.8,1.4,.9,1]}; // tünel, paket, ipucu, son kart ekstra, sarsıntı
   function openPack(type,after){
     const res=S.openPack(type); if(!res) return toast("Bu paketten yok.");
     overlay("#endOverlay",false); overlay("#packsOverlay",false);
-    $("#openKicker").textContent=D.PACKS[type].name.toUpperCase(); $("#openSets").textContent="";
+    const ov=$("#openOverlay"), best=res.cards.reduce((m,c)=>ORDER[c.rarity]>ORDER[m.rarity]?c:m,res.cards[0]), ph=PHASES[best.rarity];
+    const reduced=!!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const T1=reduced?0:ph[0], T2=ph[1], T3=reduced?0:ph[2];
+    $("#openKicker").textContent=D.PACKS[type].name.toUpperCase(); $("#openSets").textContent=""; $("#openTry").hidden=true;
+    const cssVar=(k,v)=>ov.style.setProperty?ov.style.setProperty(k,v):(ov.style[k]=v); cssVar("--tease",RAR_COLOR[best.rarity]); cssVar("--pc",D.PACKS[type].color||"#8daac6");
     $("#cardRow").innerHTML=res.cards.map((c,i)=>{
       const front=c.kind==="dp"?`<div class="rar">GELİŞİM</div><div class="big">+${c.amount}</div><div class="nm">DP</div>`
         :c.kind==="cash"?`<div class="rar">CASH</div><div class="big">+${c.amount}</div><div class="nm">$</div>`
         :`<div class="rar">${RAR[c.rarity].toUpperCase()}</div><div class="sw" style="background:${swatch(c.item.val)}"></div><div class="nm">${c.item.name}</div><small class="rar">${catName(c.item.cat)}</small>${c.dup?`<div class="dup">Tekrar · +${c.dupCash} $</div>`:""}`;
-      return `<div class="card r-${c.rarity} ${c.rarity==="epic"||c.rarity==="legendary"?"glow":""}" data-i="${i}"><div class="face back">4G</div><div class="face front">${front}</div></div>`; }).join("");
-    overlay("#openOverlay",true); $("#openOverlay").classList.remove("revealed"); FG_AUDIO.play("whoosh");
-    const cards=$$("#cardRow .card"), timers=[]; timers.push(setTimeout(()=>$("#openOverlay").classList.add("revealed"),650));
-    const flip=c=>{ if(c.classList.contains("flip")) return; c.classList.add("flip"); const r=res.cards[+c.dataset.i].rarity; FG_AUDIO.play(r==="legendary"||r==="epic"?"cheer":"coin"); };
-    cards.forEach((c,i)=>{ c.onclick=()=>flip(c); timers.push(setTimeout(()=>flip(c),850+i*260+(i===cards.length-1&&/epic|legendary/.test(res.cards[i].rarity)?450:0))); });
-    $("#openSkip").onclick=()=>{ timers.forEach(clearTimeout); $("#openOverlay").classList.add("revealed"); cards.forEach(flip); };
+      return `<div class="card r-${c.rarity} ${c.rarity==="epic"||c.rarity==="legendary"?"glow":""}" data-i="${i}" style="--i:${i}"><div class="face back">4G</div><div class="face front">${front}</div></div>`; }).join("");
+    const tease=best.kind==="item"?[`${catName(best.item.cat).toUpperCase()}`,best.rarity==="legendary"||best.rarity==="epic"?best.item.name:RAR[best.rarity].toUpperCase()]:[best.kind==="dp"?"GELİŞİM":"CASH",""];
+    $("#packTease").innerHTML=`<small>?</small><b></b>`;
+    ov.classList.remove("revealed","p-tunnel","p-pack","p-torn","p-tease","p-cards","p-done","shake","flash");
+    overlay("#openOverlay",true);
+    const cards=$$("#cardRow .card");
+    const flip=c=>{ if(c.classList.contains("flip")) return; c.classList.add("flip"); const r=res.cards[+c.dataset.i].rarity; FG_AUDIO.play(r==="legendary"?"impact":r==="epic"?"shimmer":"coin"); if(r==="legendary"||r==="epic") FG_AUDIO.play("cheer"); };
+    cards.forEach(c=>c.onclick=()=>flip(c));
+    const tl=FG_UISTATE.timeline(), at1=T1, at2=at1+T2, at3=at2+T3;
+    tl.add(0,0,()=>{ ov.classList.add("p-tunnel"); FG_AUDIO.play("whoosh"); if(T3>.5) FG_AUDIO.play("riser"); })
+      .add(at1,0,()=>{ ov.classList.add("p-pack"); })
+      .add(at2,0,()=>{ ov.classList.add("p-torn"); FG_AUDIO.play("impact"); })
+      .add(at2,Math.max(.01,T3),k=>{ ov.classList.add("p-tease"); const el=$("#packTease"); if(k>.34&&el.dataset.s!=="1"){ el.dataset.s="1"; el.querySelector("small").textContent=tease[0]; FG_AUDIO.play("shimmer"); } if(k>.67&&el.dataset.s==="1"&&tease[1]){ el.dataset.s="2"; el.querySelector("b").textContent=tease[1]; } })
+      .add(at3,0,()=>{ ov.classList.add("revealed","p-cards"); $("#packTease").dataset.s=""; });
+    cards.forEach((c,i)=>{ const last=i===cards.length-1, extra=last?ph[3]:0; tl.add(at3+.25+i*.26+extra,0,()=>{ flip(c); if(last&&ph[4]&&!reduced){ ov.classList.add("shake","flash"); FG_UISTATE.later(()=>ov.classList.remove("shake","flash"),600); } }); });
+    tl.add(at3+.4+cards.length*.26+ph[3],0,()=>{ ov.classList.add("p-done"); const item=res.cards.find(c=>c.kind==="item"&&!c.dup); if(item){ const b=$("#openTry"); b.hidden=false; b.onclick=()=>{ tl.kill(); overlay("#openOverlay",false); refreshWallet(); lockerCat=item.item.cat; if(after) after(); else openLocker(); }; } });
+    // Paket aşamasında dokunmak yırtmayı ve ipucunu hızlandırır.
+    $("#packSeal").onclick=()=>{ if(!ov.classList.contains("p-torn")) tl.seek(at2); };
+    tl.play();
+    $("#openSkip").onclick=()=>{ tl.skip(); ov.classList.remove("shake","flash"); cards.forEach(flip); };
     if(res.sets.length) $("#openSets").textContent=res.sets.map(s=>`${s.name} tamamlandı! Ödülü eklendi.`).join(" ");
-    $("#openDone").onclick=()=>{ timers.forEach(clearTimeout); overlay("#openOverlay",false); refreshWallet(); after?after():openPacks(); };
+    $("#openDone").onclick=()=>{ tl.kill(); overlay("#openOverlay",false); refreshWallet(); after?after():openPacks(); };
   }
 
   // ================= OYUNCU / GELİŞİM =================
@@ -190,7 +215,7 @@
     $$("#attrList .up").forEach(b=>b.onclick=()=>{ const r=S.upgrade(b.dataset.k); if(r.ok){ FG_AUDIO.play("coin"); openPlayer(); refreshWallet(); } else if(r.need) toast(`${r.need} DP daha lazım.`); });
     FG_CAREER_UI.card();
     overlay("#playerOverlay",true);
-    FG_PREVIEW.show($("#playerCanvas"),S.playerModel({pose:"apose"}),{zoom:1,spin:true});
+    FG_PREVIEW.show($("#playerCanvas"),S.playerModel({pose:"apose"}),{shot:"hero",spin:true});
   }
 
   // ================= PAKETLER =================
@@ -217,7 +242,7 @@
     $$("#lockerGrid .it").forEach(b=>b.onclick=()=>{ const it=S.item(b.dataset.it); if(!S.owns(it.id)) return toast(it.prestige?`Prestij eşyası: ${it.prestige}. Satın alınamaz.`:"Paketlerden çıkar. Seviyeleri bitirip paket kazan."); S.equip(it.id); FG_AUDIO.play("tap"); openLocker(); });
     $("#setList").innerHTML=D.SETS.map(st=>{ const n=st.items.filter(id=>s.owned.includes(id)).length, done=s.setsClaimed.includes(st.id); return `<div class="set"><b>${st.name} ${n}/${st.items.length}${done?" ✓":""}</b><div class="pips">${st.items.map(id=>`<i class="${s.owned.includes(id)?"on":""}"></i>`).join("")}</div><small>${st.items.map(id=>S.item(id).name).join(" · ")}. Ödül: ${st.reward.cash} $ + ${D.PACKS[st.reward.pack].name}</small></div>`; }).join("");
     overlay("#lockerOverlay",true);
-    FG_PREVIEW.show($("#lockerCanvas"),S.playerModel({pose:"apose"}),{zoom:1,spin:true});
+    const eqItem=S.item(S.equippedId(lockerCat)); FG_PREVIEW.show($("#lockerCanvas"),S.playerModel({pose:"apose"}),{shot:FG_PREVIEW.shotFor(lockerCat),spin:true,glow:eqItem?RAR_COLOR[eqItem.rarity]:null});
   }
 
   // ================= BAĞLANTILAR =================
