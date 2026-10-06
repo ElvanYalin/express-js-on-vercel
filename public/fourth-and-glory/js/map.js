@@ -1,7 +1,7 @@
 // Fourth & Glory — Soccer Hero tarzı seviye haritası (Amerikan futbolu sahası üzerinde)
 (function(){
   const XS=[.5,.2,.44,.8,.56,.2,.42,.78,.52,.5];
-  const STEP=178, TOP=300, BOTTOM=360;
+  const STEP=178, TOP=300, BOTTOM=360, SAFE_L=92; // SAFE_L: sol menü (Oyuncum/Paketler/Soyunma) bandı
   const starSvg=(on,cls="")=>`<svg class="star ${cls}" viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.4l6.6-.8z" fill="${on?"#ffd84a":"#5d6770"}" stroke="${on?"#b8860b":"#3b434a"}" stroke-width="1.2" stroke-linejoin="round"/>${on?'<path d="M12 5.5l1.8 3.8 3.9.5" fill="none" stroke="#fff6b0" stroke-width="1.2" stroke-linecap="round"/>':""}</svg>`;
   function crest(team){ return `<span class="crest" style="background:${team.jersey};color:${team.trim}">${team.short}</span>`; }
   function catmull(pts){ let d=`M${pts[0].x},${pts[0].y}`; for(let i=0;i<pts.length-1;i++){ const p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
@@ -20,7 +20,7 @@
     const field=document.getElementById("mapField"), s=FG_STATE.get(), L=FG_DATA.levels;
     const W=Math.min(560,window.innerWidth), H=TOP+(L.length-1)*STEP+BOTTOM;
     field.style.height=H+"px";
-    const pos=L.map((l,i)=>({x:XS[i%XS.length]*W,y:H-BOTTOM+40-i*STEP}));
+    const pos=L.map((l,i)=>({x:Math.max(SAFE_L+46,Math.min(W-52,XS[i%XS.length]*W)),y:H-BOTTOM+40-i*STEP}));
     const r=rnd(7); let svg=`<svg class="bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">`;
     // çim şeritleri + yard çizgileri
     const band=64;
@@ -41,15 +41,19 @@
     // üst: şampiyonluk end zone + kupa
     const fin=L[L.length-1].team;
     svg+=`<rect x="${sl}" y="0" width="${W-2*sl}" height="190" fill="${fin.jersey}" opacity=".9"/><rect x="${sl}" y="188" width="${W-2*sl}" height="5" fill="#fff"/>`;
-    svg+=`<text x="${W/2}" y="44" font-family="Arial Black,Impact,Arial,Helvetica,sans-serif" font-weight="900" font-size="18" fill="${fin.trim}" text-anchor="middle" letter-spacing="4">ŞAMPİYONLUK</text>`;
-    svg+=trophy(W/2,110);
+    svg+=trophy(W/2,98);
+    svg+=`<text x="${W/2}" y="178" font-family="Arial Black,Impact,Arial,Helvetica,sans-serif" font-weight="900" font-size="16" fill="${fin.trim}" text-anchor="middle" letter-spacing="4">ŞAMPİYONLUK</text>`;
     // Career environments behind the unchanged winding path.
     const look=k=>window.FG_LOOK?.STAGES[k]?.mapTint,chapters=[{a:0,b:0,key:'camp',c:'#355e35'},{a:1,b:5,key:'college',c:look('college')||'#8a5a33',o:.28},{a:6,b:6,key:'combine',c:look('combine')||'#46566a'},{a:7,b:9,key:'pro',c:look('pro')||'#203750'}];
+    const labels=[];
     chapters.forEach(ch=>{const top=pos[ch.b].y-STEP/2,bottom=pos[ch.a].y+STEP/2;
       if(ch.key!=='camp')svg+=`<rect x="0" y="${top}" width="${W}" height="${bottom-top}" fill="${ch.c}" opacity="${ch.o||.7}"/>`;
-      svg+=`<rect x="${W*.08}" y="${top+3}" width="${W*.84}" height="31" rx="8" fill="#0b1c2ad9"/><text x="${W/2}" y="${top+23}" text-anchor="middle" fill="#f4e7b7" font-family="Arial" font-size="12" font-weight="bold">${FG_CAREER.names[ch.key]}</text>`;
-      if(ch.key==='college'){for(let k=0;k<3;k++){const x=k%2?W-49:14,y=top+90+k*250;svg+=`<g transform="translate(${x},${y})"><rect width="32" height="66" fill="#8c4a35"/><path d="M-4 0L16 -15L36 0Z" fill="#3d4a52"/><path d="M7 8V52M16 8V52M25 8V52" stroke="#e8dcc0" stroke-width="5"/><path d="M16 -15V-47h27v16h-27" fill="${hc.jersey}" stroke="${hc.trim}" stroke-width="2"/></g>`;}}
-      if(ch.key==='pro'){for(let k=0;k<9;k++){const x=k%2?W-30:0,y=top+65+k*42;svg+=`<rect x="${x}" y="${y}" width="30" height="60" fill="#172b3b"/><path d="M${x+8} ${y+6}v43M${x+20} ${y+6}v43" stroke="#e9c36b" stroke-width="3" stroke-dasharray="4 7"/>`;}}
+      { const label=FG_CAREER.names[ch.key], lw=label.length*7.4+28, n=pos[ch.a], ly=n.y+6;
+        const lx=n.x<W/2?Math.min(W-lw-8,n.x+52):Math.max(SAFE_L,n.x-52-lw); // bölümün ilk düğümünün yanında; yıldızlara ve sol menüye değmez
+        labels.push([lx-30,ly-45,lw+60,90]);
+        svg+=`<g class="chapter"><rect x="${lx}" y="${ly-13}" width="${lw}" height="26" rx="13" fill="#0b1c2ae6" stroke="${ch.c}" stroke-width="2"/><text x="${lx+lw/2}" y="${ly+4}" text-anchor="middle" fill="#f4e7b7" font-family="Arial" font-size="11" font-weight="bold" letter-spacing="1">${label}</text></g>`; }
+      if(ch.key==='college'){for(let k=0;k<3;k++){const x=W-49,y=top+90+k*250;svg+=`<g transform="translate(${x},${y})"><rect width="32" height="66" fill="#8c4a35"/><path d="M-4 0L16 -15L36 0Z" fill="#3d4a52"/><path d="M7 8V52M16 8V52M25 8V52" stroke="#e8dcc0" stroke-width="5"/><path d="M16 -15V-47h27v16h-27" fill="${hc.jersey}" stroke="${hc.trim}" stroke-width="2"/></g>`;}}
+      if(ch.key==='pro'){for(let k=0;k<9;k+=2){const x=W-30,y=top+65+k*42;svg+=`<rect x="${x}" y="${y}" width="30" height="60" fill="#172b3b"/><path d="M${x+8} ${y+6}v43M${x+20} ${y+6}v43" stroke="#e9c36b" stroke-width="3" stroke-dasharray="4 7"/>`;}}
     });
     // yol
     const pts=[{x:W/2,y:H-150},...pos,{x:W/2,y:205}];
@@ -58,7 +62,7 @@
     svg+=`<path d="${catmull(pts.slice(0,doneIdx+1))}" fill="none" stroke="#b7ff4c" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(183,255,76,.6))"/>`;
     // dekor (düğümlerden uzak)
     const deco=[]; const far=(x,y)=>pos.every(p=>Math.hypot(p.x-x,p.y-y)>95)&&Math.abs(x-W/2)>40||y<H-260&&pos.every(p=>Math.hypot(p.x-x,p.y-y)>95);
-    for(let i=0;i<L.length*2.2;i++){ const y=H-280-r()*(H-560), x=sl+30+r()*(W-2*sl-60); if(!pos.every(p=>Math.hypot(p.x-x,p.y-y)>100)) continue;
+    for(let i=0;i<L.length*2.2;i++){ const y=H-280-r()*(H-560), x=sl+30+r()*(W-2*sl-60); if(x<SAFE_L+20||labels.some(([bx,by,bw,bh])=>x>bx&&x<bx+bw&&y>by&&y<by+bh)||!pos.every(p=>Math.hypot(p.x-x,p.y-y)>100)) continue;
       const k=r(); deco.push(k<.3?dummy(x,y,.9)+dummy(x+30,y+4,.9):k<.6?cone(x,y,1,r()*30-15)+(r()<.5?cone(x+34,y+18,.9,70):""):k<.85?ball(x,y,r()*60-30)+ball(x+24,y+18,r()*60):helmet(x,y,L[Math.floor(r()*L.length)].team.helmet,"#fff")); }
     svg+=deco.join("")+"</svg>";
     let html=svg;

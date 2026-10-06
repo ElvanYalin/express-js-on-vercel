@@ -41,12 +41,17 @@ function playShot(level,si,bot,exclude=new Set(),retry=0){
 // Seviyeyi ilk denemede bitirme: 4 play, 3 can.
 function playLevel(level,bot){let lives=3;for(let si=0;si<level.shots.length;si++){const ex=new Set();let done=false,retry=0;while(!done){const r=playShot(level,si,bot,ex,retry);if(r.ok)done=true;else{retry++;if(bot.learn&&r.pick)ex.add(r.pick.i+r.pick.type);if(--lives<=0)return {ok:false,lives:0};}}}return {ok:true,lives};}
 
+// İlk kez oynayan: rastgele receiver, TOUCH, ~1–1.6 sn; öğrenmez, koşarken yalnızca ortaya yönelir.
+function firstTimer(l){let lives=3;for(let si=0;si<l.shots.length;si++){let retry=0;for(;;){const r=run(l,si,{i:Math.floor(Math.random()*l.shots[si].wr.length),type:'touch',wait:1+Math.random()*.6,variant:G.variantFor(l.id,si,retry)},.25);if(r.ok)break;retry++;if(--lives<=0)return false;}}return true;}
+const first=D.levels.slice(0,3).map(l=>{let ok=0;for(let k=0;k<N;k++)if(firstTimer(l))ok++;return ok/N;});
 const out={};
 for(const [name,bot] of Object.entries(BOTS)){out[name]=D.levels.map(l=>{let ok=0,play=0;for(let k=0;k<N;k++){if(playLevel(l,bot).ok)ok++;if(playShot(l,k%4,bot).ok)play++;}return {level:l.id,clear:ok/N,play:play/N};});}
 const pct=v=>String(Math.round(v*100)).padStart(3)+'%';
 console.log('Seviye   '+D.levels.map(l=>String(l.id).padStart(5)).join(''));
 for(const [name,rows] of Object.entries(out)){console.log(name.padEnd(8)+' '+rows.map(r=>pct(r.clear).padStart(5)).join('')+'   (seviye ilk deneme)');console.log(''.padEnd(9)+rows.map(r=>pct(r.play).padStart(5)).join('')+'   (tek play)');}
+console.log('ilk kez  '+first.map(v=>pct(v).padStart(5)).join('')+'   (L1–L3, öğrenmeyen oyuncu)');
 if(REPORT)process.exit(0);
+assert(first[0]>=.75&&first[1]>=.55,`Öğretici seviyeler fazla zor: ilk kez oynayan L1 ${pct(first[0])}, L2 ${pct(first[1])}`);
 
 // Hedef eğri (ortalama oyuncu, seviye ilk deneme). Bkz. docs IYILESTIRME_PLANI.md §2.2
 const TARGET=c.FG_DIFF?c.FG_DIFF.targets:null;

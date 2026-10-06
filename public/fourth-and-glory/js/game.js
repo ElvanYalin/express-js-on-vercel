@@ -259,7 +259,7 @@
       // Juke: ani yön değişimi savunmanın tahminini kısa süre dondurur (çeviklik süreyi uzatır).
       if(len>.3){const ang=Math.atan2(c.x,c.z);if(P.lastAng!=null){const dA=Math.abs(((ang-P.lastAng+Math.PI*3)%(Math.PI*2))-Math.PI);if(dA>1.0)P.jukeUntil=G.t+.18+.25*clamp((A('agility')-50)/50,0,1);}P.lastAng=ang;}
       const juking=G.t<(P.jukeUntil||0);
-      for(const d of [...P.defs,...P.rushers]){const sp=speed*df.pursuit*(d.star?1.05:1);if(!juking||!d.pp)d.pp=pursuitPoint(d,w,sp);step(d,d.pp.x,d.pp.z,sp,dt);d.pose=hyp(d,w)<2?'tackle':'stand';if(hyp(d,w)<.8&&G.t-P.catchAt>.35){w.fall=.6;SFX.play('hit');E.mark&&E.mark(w.x,w.z);finishCarry('TACKLE');return;}}
+      for(const d of [...P.defs,...P.rushers]){const sp=speed*df.pursuit*(d.star?1.05:1),lead=df.lead??1;if(!juking||!d.pp){const q=pursuitPoint(d,w,sp);d.pp={x:w.x+(q.x-w.x)*lead,z:w.z+(q.z-w.z)*lead};}step(d,d.pp.x,d.pp.z,sp,dt);d.pose=hyp(d,w)<2?'tackle':'stand';if(hyp(d,w)<(df.tackleR??.8)&&G.t-P.catchAt>.35){w.fall=.6;SFX.play('hit');E.mark&&E.mark(w.x,w.z);finishCarry('TACKLE');return;}}
       if(w.z<=-50){finishCarry('TOUCHDOWN!');return;}if(!G.shot.goal&&w.z<=P.goalZ&&G.t-P.catchAt>1.4){finishCarry('FIRST DOWN!');return;}if(Math.abs(w.x)>=26.4){finishCarry('SAHA DIŞI');return;}if(w.z>P.z0+18||G.t-P.catchAt>14){finishCarry('OYUN BİTTİ');return;}
       return;
     }
