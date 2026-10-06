@@ -12,7 +12,7 @@ const dom=new El('root');parse(fs.readFileSync(root+'/index.html','utf8'),dom);c
 const c={CanvasRenderingContext2D:class{},document:doc,console:{log:console.log,warn:console.warn,error:(...e)=>errors.push(e.join(' '))},Math,Date,performance:{now:()=>now},navigator:{},location:{protocol:'file:'},innerWidth:390,devicePixelRatio:1,requestAnimationFrame:f=>frames.push(f),setTimeout:f=>(timers.push(f),timers.length),clearTimeout(){},localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=v},addEventListener:(t,f)=>(events[t]||=[]).push(f)};c.window=c;vm.createContext(c);
 for(const n of ['data','state','career','audio','athlete','gl3d','three','athlete-model','athlete-game','stadium'])vm.runInContext(fs.readFileSync(root+'/js/'+n+'.js','utf8'),c,{filename:n});
 c.THREE.WebGLRenderer=class{setClearColor(){}setPixelRatio(){}setSize(){}render(s){s.updateMatrixWorld(true);}dispose(){}};
-for(const n of ['gl3d-enhanced','engine','preview','game','map','career-ui','ui'])vm.runInContext(fs.readFileSync(root+'/js/'+n+'.js','utf8'),c,{filename:n});
+for(const n of ['gl3d-enhanced','engine','preview','ui-state','game','map','career-ui','ui'])vm.runInContext(fs.readFileSync(root+'/js/'+n+'.js','utf8'),c,{filename:n});
 for(const fn of events.DOMContentLoaded)fn();const $=id=>doc.getElementById(id);
 function tick(){now+=33;const jobs=frames;frames=[];jobs.forEach(fn=>fn(now));}
 assert($('creatorScreen').classList.contains('active'));$('crStart').click();assert($('mapScreen').classList.contains('active'));assert.equal($('mapField').querySelectorAll('.node').length,10);const first=$('mapField').querySelectorAll('.node')[0];assert.equal(parseFloat(first.style.left),195);

@@ -490,6 +490,7 @@
     if(G.phase==="aim"&&G.t<1.4)dt*=.55;
     G.t+=dt;if(G.shot.career&&['aim','live','carry'].includes(G.phase)){G.P.audioAt=(G.P.audioAt||0)-dt;if(G.P.audioAt<=0){SFX.play('crowd');G.P.audioAt=3.4;}if(G.phase==='carry'&&Math.floor(G.t*3)!==Math.floor((G.t-dt)*3))SFX.play('step');}
     if(G.phase!=="done"&&G.phase!=="presnap") UPD[G.shot.type](dt);
+    if(G.phase!==G._hudPhase){ G._hudPhase=G.phase; hud(); } // B5: faz değişimi anında arayüze yansır
     G.ents.forEach(e=>{ if(!e.moving) e.anim+=dt*.6; });
     if(G.pending){ G.pending.timer-=dt; if(G.pending.timer<=0) resolve(); }
     G.fx.forEach(p=>{ p.life-=dt; p.x+=p.vx*dt; p.z+=p.vz*dt; p.h+=p.vh*dt; p.vh-=12*dt; }); G.fx=G.fx.filter(p=>p.life>0&&p.h>-.5);

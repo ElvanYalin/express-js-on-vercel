@@ -65,7 +65,7 @@
     // düğümler
     L.forEach((l,i)=>{
       const p=pos[i], st=FG_STATE.stars(l.id), unlocked=FG_STATE.isUnlocked(l.id), current=l.id===s.unlocked&&!st;
-      const cls=st?"done":current?"current":unlocked?"done":"locked";
+      const cls=st?"done":current?"current":unlocked?"open":"locked"; // B9: açık ama oynanmamış düğüm ayrı görünür
       html+=`<button class="node ${cls}" data-level="${l.id}" style="left:${p.x}px;top:${p.y}px" aria-label="Seviye ${l.id}">
         ${st?`<div class="stars">${[1,2,3].map(k=>starSvg(k<=st)).join("")}</div>`:""}
         ${current?`<div class="flag"><i></i><b>${l.id}</b></div>`:""}

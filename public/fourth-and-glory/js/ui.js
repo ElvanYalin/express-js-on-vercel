@@ -6,8 +6,9 @@
   const RAR={common:"Common",rare:"Rare",epic:"Epic",legendary:"Legendary"};
 
   function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2600); }
-  function show(id){ $$(".screen").forEach(s=>s.classList.toggle("active",s.id===id)); }
-  function overlay(id,on){ $(id).classList.toggle("show",on); }
+  const UIS=FG_UISTATE;
+  function show(id){ UIS.screen(id); }
+  function overlay(id,on){ on?UIS.open(id):UIS.close(id); }
   function crestEl(el,team){ el.textContent=team.short; el.style.background=team.jersey; el.style.color=team.trim; }
   const homeCrest=()=>({short:FG_CAREER.currentTeam(level?.id)?.short||"G",jersey:D.homeKit.jersey,trim:D.homeKit.trim});
   const swatch=v=>v===true?"#0b0b0b":v==="team"?D.homeKit.trim:(v||"transparent");
@@ -83,8 +84,10 @@
 
   // ================= SEVİYE GİRİŞİ =================
   function openIntro(l){
+    // B4: aynı seviyenin girişi zaten açıksa ikinci dokunuş yok sayılır
+    if(level===l&&$("#introOverlay").classList.contains("show")&&$("#gameScreen").classList.contains("active")) return;
     if(!l.practice&&FG_CAREER_UI.gate(l))return; FG_CAREER.sync(l.id);
-    level=l; show("gameScreen");
+    level=l; show("gameScreen"); $("#pauseBtn").disabled=false;
     if(!engineReady){ const fx=E.init($("#stage")); GAME.attachInput(fx); engineReady=true; } else E.resize();
     GAME.startLevel(l); GAME.pause(true); GAME.setRunning(true);
     $("#introTitle").textContent=l.practice?`ANTRENMAN ${l.id}`:`${l.chapter} · ${l.id}`; $("#introVenue").textContent=l.team.venue;
@@ -114,13 +117,22 @@
     const h=$("#hint"); h.textContent=sh.career?"SNAP ile başlat → receiver seç → PAS AT. Sol kontrolle QB’yi hareket ettir.":({pass:'Receiver’a dokun veya ona doğru kaydır. Nişan alırken zaman yavaşlar.',target:'Turuncu hedefe dokun veya ona doğru kaydır.',fg:'Direklerin ortasına doğru kaydır. Güç yardımı mesafeyi ayarlar.',punt:'Yukarı kaydır; hedef bölgeye göre güç yardımı devrede.',dive:'Sarı halkaya dokun veya oraya doğru kaydır.'})[sh.type]||si.how; h.style.opacity=S.get().settings.guide?1:0; clearTimeout(h._t); h._t=setTimeout(()=>{ h.style.opacity=0; },6000);
   };
   GAME.hooks.toast=toast;
-  GAME.hooks.levelEnd=res=>{ setTimeout(()=>{ GAME.pause(true); showEnd(res); },450); };
+  // B1: sonuç anında kaydedilir; yalnızca sunum ertelenir ve ekran değişince iptal olur.
+  function commitResult(l,res){
+    if(!res.success||l.practice) return {cash:0,dp:0,packs:[],prestige:[],sets:[],unlockedNew:false};
+    const r=S.finishLevel(l,res.stars); FG_CAREER.record(l.id,res.stats||{},true,res.stars); return r;
+  }
+  GAME.hooks.levelEnd=res=>{
+    const l=level, committed=commitResult(l,res);
+    $("#pauseBtn").disabled=true;
+    UIS.later(()=>{ $("#pauseBtn").disabled=false; if(level!==l||!$("#gameScreen").classList.contains("active")) return; GAME.pause(true); showEnd(res,committed); },450);
+  };
 
   // ================= SEVİYE SONU =================
-  function showEnd(res){
-    const l=level; $("#endKicker").textContent=`SEVİYE ${l.id} · ${l.team.name.toUpperCase()}`;
+  function showEnd(res,r){
+    const l=level; overlay("#pauseOverlay",false); $("#endKicker").textContent=`SEVİYE ${l.id} · ${l.team.name.toUpperCase()}`;
     if(res.success){
-      const r=l.practice?{cash:0,dp:0,packs:[],prestige:[],sets:[],unlockedNew:false}:S.finishLevel(l,res.stars); if(!l.practice)FG_CAREER.record(l.id,res.stats||{},true,res.stars); pendingPacks=r.packs.slice();
+      pendingPacks=r.packs.slice();
       $("#endTitle").textContent=l.final?"ŞAMPİYON!":"SEVİYE TAMAM!";
       $("#endStars").innerHTML=[1,2,3].map(k=>FG_MAP.starSvg(k<=res.stars,"big")).join("");
       let html=`<div class="gold"><span>Cash</span><b>+${r.cash} $</b></div><div><span>Gelişim puanı</span><b>+${r.dp} DP</b></div>`;
@@ -229,7 +241,11 @@
     $("#importSaveFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>500000)throw Error('Kayıt dosyası çok büyük.');const text=await file.text();if(!confirm('Mevcut ilerlemenin yerine bu kayıt yüklensin mi?'))return;const result=S.importSave(text);overlay('#settingsOverlay',false);if(S.hasProfile())openMap();else openCreator(false);toast(result.migrated?'Oyuncu ve gelişim aktarıldı. Bu sürümün farklı görevleri Seviye 1’den başlar.':'Kayıt yüklendi.');}catch(err){toast(err.message);}finally{e.target.value='';}};
     $("#resetBtn").onclick=e=>{ const b=e.currentTarget; if(!b.dataset.armed){ b.dataset.armed="1"; b.textContent="Emin misin? Silmek için tekrar bas"; setTimeout(()=>{ delete b.dataset.armed; b.textContent="İlerlemeyi sıfırla"; },3500); return; }
       delete b.dataset.armed; b.textContent="İlerlemeyi sıfırla"; S.reset(); overlay("#settingsOverlay",false); openCreator(false); };
-    $$("[data-close]").forEach(b=>b.onclick=()=>{ b.closest(".overlay").classList.remove("show"); refreshWallet(); });
+    $$("[data-close]").forEach(b=>b.onclick=()=>{ overlay("#"+b.closest(".overlay").id,false); refreshWallet(); });
+    // Esc: en üstteki kapatılabilir katmanı kapatır; oyunda duraklatmayı açar/kapatır.
+    window.addEventListener("keydown",e=>{ if(e.key!=="Escape") return; const t=UIS.top();
+      if(t){ const x=document.getElementById(t).querySelector("[data-close],#careerClose"); if(x){ x.click(); return; } if(t==="pauseOverlay"){ $("#resumeBtn").click(); return; } }
+      else if($("#gameScreen").classList.contains("active")&&GAME.G.phase!=="done"&&!$("#pauseBtn").disabled) $("#pauseBtn").click(); });
     let lastW=window.innerWidth;
     window.addEventListener("resize",()=>{ if(engineReady) E.resize(); if(Math.abs(window.innerWidth-lastW)>20&&$("#mapScreen").classList.contains("active")){ lastW=window.innerWidth; FG_MAP.build(); } });
     document.addEventListener("visibilitychange",()=>{ if(document.hidden&&$("#gameScreen").classList.contains("active")&&!$("#introOverlay").classList.contains("show")&&!$("#endOverlay").classList.contains("show")){ GAME.pause(true); overlay("#pauseOverlay",true); } });

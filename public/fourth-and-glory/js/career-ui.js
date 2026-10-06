@@ -2,11 +2,13 @@
 (function(){
  const C=FG_CAREER,S=FG_STATE,G=FG_GAME,$=id=>document.getElementById(id);
  let next=null;
- function close(){ $('careerOverlay').classList.remove('show'); }
+ function close(){ FG_UISTATE.close('careerOverlay'); }
  function gate(level){const reason=C.gate(level.id);if(!reason)return false;if(reason==='locked'){FG_UI.toast('Önce önceki seviyeyi tamamla.');return true;}
+ // B2: kapı her zaman harita ekranında açılır; kapatınca oyuncu donmuş sahada kalmaz.
+ if(!document.getElementById('mapScreen').classList.contains('active'))FG_UI.openMap();
  next=level;const college=reason==='college';$('careerTitle').textContent=college?'ÜNİVERSİTE TEKLİFLERİ':'DRAFT · TAKIM TERCİHİ';$('careerText').textContent=college?'Kamp performansın dikkat çekti. Kariyerini hangi okulda sürdüreceksin?':`Tahmin: ${C.draftInfo().round}. tur, ${C.draftInfo().pick}. sıra. ${C.draftInfo().contract}. Uygun tekliflerden tercihini yap.`;
  $('careerOptions').innerHTML=C.offers(reason).map(t=>`<button class="career-offer" data-choice="${t.id}" ${t.available?'':'disabled'}><span class="crest" style="background:${t.jersey};color:${t.trim}">${t.short}</span><b>${t.name}</b><small>${t.note}</small><em>${t.available?'TEKLİF VAR':`Scout ${t.threshold} gerekli`} · güven ${t.trust}</em></button>`).join('');
- $('careerOptions').querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{if(C.choose(reason,b.dataset.choice)){close();FG_UI.openMap();FG_UI.openIntro(next);}});$('careerOverlay').classList.add('show');return true;
+ $('careerOptions').querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{if(C.choose(reason,b.dataset.choice)){close();FG_UI.openIntro(next);}});FG_UISTATE.open('careerOverlay');return true;
  }
  function map(){C.sync();const stage=C.stage(S.get().unlocked);document.body.dataset.careerStage=stage;document.querySelector('.map-title small').textContent=C.names[stage];}
  function card(){const c=C.get(),t=C.currentTeam(),st=c.stats,rate=st.attempts?Math.round(st.completions/st.attempts*100):0;
@@ -20,11 +22,11 @@
  [...$('receiverChoices').children].forEach((b,i)=>{b.classList.toggle('selected',i===p.selected);b.textContent=p.wrs?.[i]?.role||'';b.hidden=!p.wrs?.[i];});
  }
  function practice(){ $('careerTitle').textContent='SERBEST ANTRENMAN';$('careerText').textContent='Pas, koşu, tackle ve vuruş görevlerini çalış. Kariyer ilerlemesi ve istatistikleri etkilenmez.';
- $('careerOptions').innerHTML=FG_DATA.practiceLevels.map(l=>`<button class="career-offer" data-practice="${l.id}"><b>Antrenman ${l.id}</b><small>${l.shots.map(x=>FG_DATA.SHOT_INFO[x.type].label).join(' · ')}</small></button>`).join('');$('careerOptions').querySelectorAll('[data-practice]').forEach(b=>b.onclick=()=>{close();FG_UI.openIntro(FG_DATA.practiceLevels[+b.dataset.practice-1]);});$('careerOverlay').classList.add('show');
+ $('careerOptions').innerHTML=FG_DATA.practiceLevels.map(l=>`<button class="career-offer" data-practice="${l.id}"><b>Antrenman ${l.id}</b><small>${l.shots.map(x=>FG_DATA.SHOT_INFO[x.type].label).join(' · ')}</small></button>`).join('');$('careerOptions').querySelectorAll('[data-practice]').forEach(b=>b.onclick=()=>{close();FG_UI.openIntro(FG_DATA.practiceLevels[+b.dataset.practice-1]);});FG_UISTATE.open('careerOverlay');
  }
  window.FG_CAREER_UI={gate,map,card,controls};
  window.addEventListener('DOMContentLoaded',()=>{
- $('careerClose').onclick=close;$('trainingBtn').onclick=()=>{document.getElementById('playerOverlay').classList.remove('show');practice();};
+ $('careerClose').onclick=close;$('trainingBtn').onclick=()=>{FG_UISTATE.close('playerOverlay');practice();};
  $('snapAction').onclick=()=>G.snap();let chargeAt=0;const pass=$('passAction');pass.onpointerdown=e=>{e.preventDefault();chargeAt=performance.now();pass.setPointerCapture(e.pointerId);pass.textContent='GÜÇ HAZIRLANIYOR';};pass.onpointerup=e=>{e.preventDefault();G.passSelected(Math.min(1,(performance.now()-chargeAt)/900));pass.textContent='PAS AT';controls();};pass.onpointercancel=()=>{chargeAt=0;pass.textContent='PAS AT';};pass.onclick=e=>{if(e.detail===0){G.passSelected();controls();}};
  for(let i=0;i<5;i++){const b=document.createElement('button');b.onclick=()=>G.selectReceiver(i);$('receiverChoices').appendChild(b);}
  const pad=$('movePad'),knob=$('moveKnob');let pointer=null;
