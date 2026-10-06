@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict'),path=require('path');const dir=path.resolve(__dirname,'..'),storage={};let now=0;
 const E={cam:{},portrait:true,setCrowdColors(){},zOf:y=>50-y,yardOf:z=>50-z,FIELD_W:26.67,size:()=>({W:390,H:844}),project:(x,y,z)=>({x:195+x*8,y:350+z*5-y*4}),toGround:(x,y)=>({x:(x-195)/8,z:(y-350)/5})};
-const c={console,Math,performance:{now:()=>now},navigator:{},localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=v},requestAnimationFrame(){},FG_ENGINE:E,FG_AUDIO:{play(){},unlock(){}}};c.window=c;vm.createContext(c);for(const n of ['data','state','game'])vm.runInContext(fs.readFileSync(path.join(dir,'js',n+'.js'),'utf8'),c);
+const c={console,Math,performance:{now:()=>now},navigator:{},localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=v},requestAnimationFrame(){},FG_ENGINE:E,FG_AUDIO:{play(){},unlock(){}}};c.window=c;vm.createContext(c);for(const n of ['data','state','difficulty','game'])vm.runInContext(fs.readFileSync(path.join(dir,'js',n+'.js'),'utf8'),c);
 const S=c.FG_STATE,D=c.FG_DATA,G=c.FG_GAME;S.setProfile({name:'QA',position:'QB',number:12});const base=JSON.parse(S.exportSave());
 function sim(t){for(let i=0;i<t*120&&!G.G.pending;i++)G._simulate(1/120);}
 function setup(l,i){G.startLevel(l);G.G.si=i;G._restartShot();G.pause(false);}

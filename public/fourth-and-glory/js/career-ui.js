@@ -18,7 +18,7 @@
  }
  function season(){const target=$('seasonSchedule');target.innerHTML=FG_DATA.levels.map(l=>`<li>${S.stars(l.id)?'✓':S.isUnlocked(l.id)?'→':'·'} ${l.id}. ${l.chapter} — ${l.team.name}</li>`).join('');}
  function controls(){const g=G.G,p=g.P,active=!!g.shot?.career;const root=$('qbControls');if(!root)return;root.hidden=!active||!['presnap','aim','live','carry'].includes(g.phase);document.getElementById('gameScreen').classList.toggle('qb-game',active);if(!active)return;
- $('snapAction').hidden=g.phase!=='presnap';$('passAction').hidden=g.phase!=='aim';$('carryNote').hidden=g.phase!=='carry';$('receiverChoices').hidden=!['presnap','aim'].includes(g.phase);$('movePad').hidden=!['aim','carry'].includes(g.phase);
+ $('snapAction').hidden=g.phase!=='presnap';$('throwAwayAction').hidden=g.phase!=='aim'||!!g.taUsed?.[g.si];$('passAction').hidden=g.phase!=='aim';$('carryNote').hidden=g.phase!=='carry';$('receiverChoices').hidden=!['presnap','aim'].includes(g.phase);$('movePad').hidden=!['aim','carry'].includes(g.phase);
  [...$('receiverChoices').children].forEach((b,i)=>{b.classList.toggle('selected',i===p.selected);b.textContent=p.wrs?.[i]?.role||'';b.hidden=!p.wrs?.[i];});
  }
  function practice(){ $('careerTitle').textContent='SERBEST ANTRENMAN';$('careerText').textContent='Pas, koşu, tackle ve vuruş görevlerini çalış. Kariyer ilerlemesi ve istatistikleri etkilenmez.';
@@ -27,7 +27,7 @@
  window.FG_CAREER_UI={gate,map,card,controls};
  window.addEventListener('DOMContentLoaded',()=>{
  $('careerClose').onclick=close;$('trainingBtn').onclick=()=>{FG_UISTATE.close('playerOverlay');practice();};
- $('snapAction').onclick=()=>G.snap();let chargeAt=0;const pass=$('passAction');pass.onpointerdown=e=>{e.preventDefault();chargeAt=performance.now();pass.setPointerCapture(e.pointerId);pass.textContent='GÜÇ HAZIRLANIYOR';};pass.onpointerup=e=>{e.preventDefault();G.passSelected(Math.min(1,(performance.now()-chargeAt)/900));pass.textContent='PAS AT';controls();};pass.onpointercancel=()=>{chargeAt=0;pass.textContent='PAS AT';};pass.onclick=e=>{if(e.detail===0){G.passSelected();controls();}};
+ $('snapAction').onclick=()=>G.snap();$('throwAwayAction').onclick=()=>{G.throwAway();controls();};let chargeAt=0;const pass=$('passAction');pass.onpointerdown=e=>{e.preventDefault();chargeAt=performance.now();pass.setPointerCapture(e.pointerId);pass.textContent='GÜÇ HAZIRLANIYOR';};pass.onpointerup=e=>{e.preventDefault();G.passSelected(Math.min(1,(performance.now()-chargeAt)/900));pass.textContent='PAS AT';controls();};pass.onpointercancel=()=>{chargeAt=0;pass.textContent='PAS AT';};pass.onclick=e=>{if(e.detail===0){G.passSelected();controls();}};
  for(let i=0;i<5;i++){const b=document.createElement('button');b.onclick=()=>G.selectReceiver(i);$('receiverChoices').appendChild(b);}
  const pad=$('movePad'),knob=$('moveKnob');let pointer=null;
  function release(){pointer=null;G.moveControl(0,0);knob.style.transform='translate(0,0)';}

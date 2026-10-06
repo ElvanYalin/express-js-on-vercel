@@ -90,7 +90,7 @@
       <div id="hint" class="hint"></div>
       <div id="qbControls" hidden><div id="receiverChoices" aria-label="Receiver seçimi"></div>
         <div id="movePad" aria-label="Hareket kontrolü"><span id="moveKnob"></span><small>HAREKET</small></div>
-        <button id="snapAction" class="cta">SNAP · BAŞLAT</button><button id="passAction" class="cta">PAS AT</button>
+        <button id="snapAction" class="cta">SNAP · BAŞLAT</button><button id="passAction" class="cta">PAS AT</button><button id="throwAwayAction" class="ghost">TOPU AT DIŞARI</button>
         <div id="carryNote">TOP SENDE · YÖN VER<br><small>Kontrolü bırakırsan ileri koşar.</small></div>
       </div>
     </div>
@@ -192,6 +192,9 @@
       <label class="row"><span>Ses efektleri</span><input type="checkbox" id="setSound" /></label>
       <label class="row"><span>Titreşim</span><input type="checkbox" id="setVib" /></label>
       <label class="row"><span>Nişan çizgisi ve ipuçları</span><input type="checkbox" id="setGuide" /></label>
+      <label class="row"><span>Zorluk</span><select id="setDifficulty"><option value="rookie">Rookie</option><option value="pro">Pro</option><option value="allpro">All-Pro</option><option value="glory">Glory</option></select></label>
+      <label class="row"><span>Uyarlanabilir zorluk</span><input type="checkbox" id="setAdaptive" /></label>
+      <label class="row"><span>Grafik kalitesi</span><select id="setQuality"><option value="auto">Otomatik</option><option value="low">Düşük</option><option value="medium">Orta</option><option value="high">Yüksek</option></select></label>
       <button id="exportSaveBtn" class="row">Kaydı dışa aktar</button>
       <label class="row">Kaydı içe aktar<input id="importSaveFile" type="file" accept=".json,application/json" /></label>
       <button id="resetBtn" class="danger">İlerlemeyi sıfırla</button>
@@ -204,6 +207,7 @@
 
   <script src="js/data.js"></script>
   <script src="js/state.js"></script>
+  <script src="js/difficulty.js"></script>
   <script src="js/career.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/athlete.js"></script>

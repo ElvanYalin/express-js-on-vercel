@@ -233,10 +233,13 @@
     $("#quitBtn").onclick=()=>{ overlay("#pauseOverlay",false); openMap(); };
     $("#playerBtn").onclick=openPlayer; $("#packsBtn").onclick=openPacks; $("#lockerBtn").onclick=openLocker;
     $("#editLookBtn").onclick=()=>{ overlay("#playerOverlay",false); openCreator(true); };
-    $("#settingsBtn").onclick=()=>{ const st=S.get().settings; $("#setSound").checked=st.sound; $("#setVib").checked=st.vibration; $("#setGuide").checked=st.guide; overlay("#settingsOverlay",true); };
+    $("#settingsBtn").onclick=()=>{ const st=S.get().settings; $("#setSound").checked=st.sound; $("#setVib").checked=st.vibration; $("#setGuide").checked=st.guide; $("#setDifficulty").value=st.difficulty||"pro"; $("#setAdaptive").checked=st.adaptive!==false; $("#setQuality").value=st.quality||"auto"; overlay("#settingsOverlay",true); };
     $("#setSound").onchange=e=>S.setting("sound",e.target.checked);
     $("#setVib").onchange=e=>S.setting("vibration",e.target.checked);
     $("#setGuide").onchange=e=>S.setting("guide",e.target.checked);
+    $("#setDifficulty").onchange=e=>{ if(["rookie","pro","allpro","glory"].includes(e.target.value)) S.setting("difficulty",e.target.value); };
+    $("#setAdaptive").onchange=e=>S.setting("adaptive",e.target.checked);
+    $("#setQuality").onchange=e=>{ if(["auto","low","medium","high"].includes(e.target.value)) S.setting("quality",e.target.value); };
     $("#exportSaveBtn").onclick=()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([S.exportSave()],{type:'application/json'}));a.href=url;a.download='fourth-glory-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
     $("#importSaveFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>500000)throw Error('Kayıt dosyası çok büyük.');const text=await file.text();if(!confirm('Mevcut ilerlemenin yerine bu kayıt yüklensin mi?'))return;const result=S.importSave(text);overlay('#settingsOverlay',false);if(S.hasProfile())openMap();else openCreator(false);toast(result.migrated?'Oyuncu ve gelişim aktarıldı. Bu sürümün farklı görevleri Seviye 1’den başlar.':'Kayıt yüklendi.');}catch(err){toast(err.message);}finally{e.target.value='';}};
     $("#resetBtn").onclick=e=>{ const b=e.currentTarget; if(!b.dataset.armed){ b.dataset.armed="1"; b.textContent="Emin misin? Silmek için tekrar bas"; setTimeout(()=>{ delete b.dataset.armed; b.textContent="İlerlemeyi sıfırla"; },3500); return; }
