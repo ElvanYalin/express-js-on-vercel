@@ -19,8 +19,9 @@ Her promptu **olduğu gibi kopyalayıp yapıştırabilirsin.**
 7. **Dosya adı:** Her görseli promptun başındaki **dosya adıyla** kaydet (ör. `equip-pot-shoyu.png`). Bana bu adlarla gönderirsen nereye ait olduğunu hemen bilirim.
 8. **Beğenmezsen:** Aynı sohbette `Same image but …` diye küçük düzeltmeler iste (ör. `Same image but the pot is slightly wider and the broth is darker`).
 
-**Üretim sırası:** S → A → B → C → D → E → F → G.
-Toplam yaklaşık 110 görsel. Önce dikey dilim için **yıldızlı (★) olanları** üretmen yeterli (yaklaşık 60 görsel).
+**Üretim sırası:** S → H (arka plan + mutfak) → B → C → D (+ H oturma pozları) → E → F (+ H arayüz) → G → A (diğer dekorlar).
+Toplam yaklaşık 160 görsel. Önce dikey dilim için **yıldızlı (★) olanları** üretmen yeterli (yaklaşık 90 görsel).
+**İkinci referans görseldeki (4 müşterili gece) arayüz için:** S-01'i ve **H bölümünü** mutlaka üret.
 
 ---
 
@@ -36,9 +37,16 @@ Aşağıdaki her promptun sonunda bu stil cümlesi zaten var. Bilgin olsun diye 
 
 ### ★ S-01 `style-reference.png` — 1536×1024
 ```
-Create a key art illustration for a 2D mobile restaurant game called "Ramen Stories". Fixed side-facing camera looking straight at a cozy small Japanese ramen restaurant at dusk. Three horizontal zones: background (wooden ceiling beams, glowing red and orange paper lanterns, large wooden-framed windows showing a street with blooming sakura trees and a small red torii gate, wooden shelves with bowls and jars, hanging red fabric banners with a simple ramen-bowl emblem, two small dining tables with happy customers eating), middle (a long warm wooden service counter; a young customer with headphones stands behind the counter, visible from the waist up, talking), foreground kitchen (three steaming stainless broth pots on a gas stove on the left, a noodle boiler with two mesh baskets in the middle, a row of metal ingredient trays filled with chashu pork slices, soft-boiled eggs, green onion, corn, bamboo shoots, narutomaki, mushrooms and nori on the right, a stack of white ramen bowls at the far right). Two friendly chefs in white uniforms and headbands stand behind the counter on the kitchen side. Lots of rising steam, warm cozy evening light, lively and inviting. Leave the top 8% and left 8% fairly calm for game UI. Style: premium hand-drawn 2D cartoon mobile game art, cozy Japanese ramen restaurant, clean confident dark-brown ink outlines (#292323), soft painterly shading with subtle texture, warm lantern lighting from the upper left, rich but controlled colors (walnut brown #432820, warm wood #986044, cream #FFF0D6, lantern orange #F5A34A, deep red #A93C35, sakura pink #F2A5B8, soft teal #76B9B2, golden highlight #F5CA72), slightly exaggerated cute proportions. No text, no letters, no numbers, no watermark.
+Create a polished gameplay screenshot-style illustration for a 2D mobile ramen cooking game, landscape, fixed straight-on camera. LAYOUT (very important): top 45% = cozy Japanese ramen restaurant at night; a long warm wooden counter crosses the full width at about 47% height; bottom 53% = a detailed stainless steel ramen kitchen station seen from the chef's side, slightly from above.
+BACKGROUND: dark wooden pillars and shoji lattice frames, large windows showing a night street with glowing purple-pink sakura trees and warmly lit traditional Japanese houses, glowing red paper lanterns, three red noren curtain panels hanging at the top center with a white ramen-bowl emblem, small red wall banners with the same emblem, a white lucky cat figurine and a potted plant on the left, a small bonsai on the right.
+CUSTOMERS: four different young customers sitting in a row on wooden stools behind the counter, visible from the chest up, evenly spaced, each with a different happy expression (big grin with headphones around the neck; dreamy chin-on-hands; thinking with hand on chin wearing glasses; excited in a baseball cap). Above each customer an EMPTY rounded cream speech-bubble area (leave the bubbles empty).
+KITCHEN (left to right): a three-burner gas range with blue flames holding three large steel stock pots filled with creamy white tonkotsu broth, red spicy miso broth and brown shoyu broth, gentle steam; a stainless steel noodle boiler with two mesh baskets of noodles; a large stainless ingredient station with a 3x4 grid of steel trays filled with chashu pork slices, halved soft-boiled eggs, green onion, corn, bamboo shoots, shiitake mushrooms, nori sheets, narutomaki slices, green peppers, bean sprouts and red chili paste; tall stacks of white ramen bowls with red and white wave patterns on the far right.
+FRONT ROW on the steel edge: a steel cup of wooden chopsticks, a red-patterned meat block, two wooden trays of raw coiled noodles, an empty steel bowl well, a wooden cutting board with a large chef knife, and three squeeze bottles (dark brown, cream, red).
+Warm cozy night lighting, rich detail, everything clean and readable. Leave a calm dark strip along the very top edge (about 9% height) for game HUD.
+Style: premium hand-drawn 2D cartoon mobile game art, clean confident dark-brown ink outlines (#292323), soft painterly shading with subtle texture, warm lantern lighting, rich but controlled colors (walnut brown #432820, warm wood #986044, cream #FFF0D6, lantern orange #F5A34A, deep red #A93C35, sakura pink #F2A5B8, soft teal #76B9B2, golden highlight #F5CA72), cute slightly exaggerated proportions. No text, no letters, no numbers, no UI elements, no watermark.
 ```
 > Beğendiğin sonucu kaydet. **Bundan sonraki her promptta bu resmi de yükle.**
+> Bu resim aynı zamanda oyunun yeni ekran düzeninin "şablonu". Oyunu da bu düzene göre ben uyarlayacağım: 4 oturan müşteri, sipariş balonları, çelik mutfak istasyonu.
 
 ---
 
@@ -508,6 +516,200 @@ Using the attached style reference, draw a game logo emblem with NO text: a beau
 ### G-03 `loading-background.png` — 1536×1024
 ```
 Using the attached style reference, draw a soft blurred close-up background of a ramen kitchen counter at night: out-of-focus glowing lanterns (bokeh), steam, warm wood, very soft and calm, suitable behind a loading bar. No objects in sharp focus. No text, no watermark.
+```
+
+---
+
+## H — Yeni arayüz düzeni için ek görseller (ikinci referans görsel)
+
+Bu bölüm, 4 müşterili gece düzeni için gereken **ek** görsellerdir. Yukarıdaki listede olup bu düzende de kullanılanlar (tencereler, malzemeler, buhar, para, düğmeler) aynen geçerli.
+**Bu düzende kullanılmayanlar:** A-11 yemek masası, A-12/13 kapı ve F-09 adım düğmesi (sonraki fazlar için yine dursun).
+
+### Arka plan
+
+### ★ H-01 `bg-night-restaurant.png` — 1536×1024
+```
+Using the attached style reference, draw ONLY the background of the ramen restaurant at night as a game layer, straight-on view: dark wooden pillars and shoji lattice frames, a wide window band across the middle showing a night street with glowing purple-pink sakura trees and warmly lit traditional Japanese houses, red paper lanterns hanging on the left and right, small red wall banners with a white ramen-bowl emblem, a white lucky cat figurine and a small potted plant on a shelf on the far left, a small bonsai on a shelf on the far right. Leave the top center area calm (noren curtains are added as a separate layer). NO customers, NO counter, NO kitchen, NO stools. Style: premium hand-drawn 2D cartoon mobile game art, clean dark-brown ink outlines (#292323), soft painterly shading, warm cozy night lighting. No text, no letters, no watermark.
+```
+
+### ★ H-02 `bg-noren-header.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a set of three deep red fabric noren curtain panels hanging side by side from a dark wooden rod, straight-on view, the middle panel showing a simple white steaming ramen-bowl emblem, slightly wavy fabric at the bottom, placed in the upper part of the image. Transparent background. Same art style. No text, no letters, no Japanese characters, no watermark.
+```
+
+### ★ H-03 `bg-counter-stool.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw one round-backed wooden bar stool seen from behind at eye level (as if the customer side of a counter), warm wood, only the top part is visible. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-04 `kitchen-counter-wide.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a long thick warm wooden counter top seen straight from the kitchen side at eye level, spanning the full image width, polished wood grain with a bright front edge highlight, occupying only a horizontal band in the middle of the image (about 12% of the height). Seamless left and right edges. Transparent above and below. Same art style. No text, no watermark.
+```
+
+### ★ H-05 `kitchen-station-base.png` — 1536×1024
+```
+Using the attached style reference, draw the empty body of a professional stainless steel ramen kitchen station seen from the chef's side, slightly from above, filling the image: brushed steel back panel at the top, a wide steel work surface, a recessed area on the left for a gas range, a recessed area in the middle for a noodle boiler, a large recessed grid frame on the right for 3x4 food trays (empty), and a raised steel front edge along the bottom. No pots, no food, no tools. Clean, readable. Same art style. No text, no numbers, no watermark.
+```
+
+### Mutfak ekipmanları (yeni düzen)
+
+### ★ H-06 `equip-range-3burner.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a three-burner stainless steel gas range seen from slightly above, three burners with bright blue gas flames, black iron grates, front edge with three small knobs. No pots on it. Transparent background. Same art style. No text, no numbers, no watermark.
+```
+
+### ★ H-07 `equip-pot-spicy-miso.png` — 1024×1024, şeffaf arka plan
+```
+Same pot as the attached pot image (B-02), identical size, shape, angle and blank label plate, filled with bright red spicy miso broth with chili oil droplets and sesame on the surface. No steam. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-08 `equip-noodle-boiler-2.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a stainless steel commercial noodle boiler seen from slightly above with a ventilated steel back panel, a deep tank of bubbling water and two empty mesh basket slots (no baskets in it), steel frame, clean and shiny. Transparent background. Same art style. No text, no numbers, no watermark.
+```
+
+### ★ H-09 `equip-basket-in-water.png` — 1024×1536, şeffaf arka plan
+```
+Same noodle basket as the attached basket image, identical size and angle, filled with noodles, with the lower half shown slightly submerged look (water line across the middle, small bubbles around it). Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-10 `equip-ingredient-station-3x4.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a large stainless steel ingredient station seen from slightly above: a steel frame holding a 3-row by 4-column grid of 12 EMPTY rectangular steel trays, evenly spaced, all the same size, clean. Transparent background. Same art style. No text, no numbers, no watermark.
+```
+> Malzemelerin dolu tepsi halleri için C bölümündeki "tepsi" promptlarını kullan. Hepsine bu boş tepsinin **tek bir gözünü** referans olarak ekle.
+
+### ★ H-11 `equip-bowl-stack-red-wave.png` — 1024×1536, şeffaf arka plan
+```
+Using the attached style reference, draw a tall stack of six empty white ramen bowls with a red and white traditional wave pattern on the outside and a thin red rim, seen from slightly above and the side. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-12 `equip-chopsticks-cup.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a square brushed steel cup full of wooden chopsticks standing upright, seen from slightly above. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-13 `equip-raw-noodle-tray.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a shallow rectangular wooden tray holding one large coil of fresh raw ramen noodles, seen from slightly above. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-14 `equip-bowl-well.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw an empty recessed square stainless steel well set into a steel counter, seen from slightly above, where a ramen bowl is placed for assembly. Empty. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-15 `equip-cutting-board-knife.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a thick rectangular wooden cutting board seen from slightly above with a large shiny chef knife lying diagonally on it, wooden handle on the right, nothing else. Transparent background. Same art style. No text, no watermark.
+```
+
+### ★ H-16 `equip-sauce-bottles-3.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw three squeeze sauce bottles in a small steel caddy seen from slightly above: dark brown soy sauce, cream sesame sauce, bright red chili sauce, blank labels with no writing. Transparent background. Same art style. No text, no watermark.
+```
+
+### H-17 `equip-meat-block.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a raw marbled pork belly block on a small red lacquered tray, seen from slightly above. Transparent background. Same art style. No text, no watermark.
+```
+
+### Ek malzemeler (görseldeki tepsiler)
+
+C bölümündeki tek parça ve tepsi promptlarıyla şunları da üret:
+
+| # | Tek parça | `<INGREDIENT>` | Tepsi | `<INGREDIENT_PILE>` |
+|---|---|---|---|---|
+| ★ H-18 | `ing-green-pepper.png` | a few sliced shishito green peppers | `tray-green-pepper.png` | sliced shishito green peppers |
+| ★ H-19 | `ing-chili-paste.png` | a small spoonful of glossy red chili paste | `tray-chili-paste.png` | glossy red spicy chili paste |
+
+### Sipariş balonundaki ramen resimleri
+
+Aynı kâse, aynı açı; her sipariş türü için bir resim. Önce H-20'yi üret, diğerlerinde onu ekle.
+
+### ★ H-20 `order-ramen-shoyu.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a finished bowl of shoyu ramen as a small game order icon, in a black ramen bowl with a red inner rim, three-quarter top view: clear brown broth, thin noodles, two chashu slices, a halved soft-boiled egg, green onion, and two nori sheets standing at the back. Very readable at small size, bold shapes. Transparent background. Same art style. No text, no watermark.
+```
+Diğerleri (H-20'yi ekleyerek, `Same bowl and angle as the attached order icon, but …` ile başla):
+- ★ H-21 `order-ramen-spicy-miso.png` → `bright red spicy miso broth, thick noodles, ground pork, green onion, corn, a halved egg and a small red chili on the side`
+- ★ H-22 `order-ramen-tonkotsu.png` → `creamy white tonkotsu broth, thin noodles, chashu, narutomaki, halved egg, green onion and nori`
+- ★ H-23 `order-ramen-miso.png` → `golden miso broth, thick noodles, chashu, corn, bean sprouts, halved egg and mushrooms`
+
+### Müşteriler: tezgâhta oturma pozları
+
+Bu düzende müşteriler **oturuyor ve göğüsten yukarısı** görünüyor. Her müşteri için D bölümündeki karakter sayfasını ekleyip şu promptu kullan (`<NAME>` ve `<EXPRESSION>` kısımlarını değiştir):
+```
+Using the attached character sheet, draw <NAME> sitting at a ramen counter, seen straight from the front at eye level, visible from the chest up (cut cleanly at the chest, the counter will cover the lower part), facing the viewer, <EXPRESSION>. Exactly the same design, outfit and colors as the sheet. Transparent background. Same art style. No text, no watermark.
+```
+Her müşteri için 5 dosya:
+- `-seat-waiting.png` → `calm waiting expression, looking at the kitchen`
+- `-seat-happy.png` → `very happy, eyes closed in joy, big smile`
+- `-seat-dreamy.png` → `dreamy and pleased, chin resting on both hands`
+- `-seat-thinking.png` → `thinking, one hand on the chin`
+- `-seat-angry.png` → `annoyed and impatient, frowning, arms crossed`
+
+Görseldeki 4 müşteriye benzeyen yeni müşteriler (önce D bölümündeki karakter sayfası promptuyla üret):
+
+| # | Dosya öneki | Kim | `<DESCRIPTION>` |
+|---|---|---|---|
+| ★ H-24 | `char-yuto` | Lise öğrencisi | a cheerful teenage boy around 17, messy dark brown hair, big headphones around the neck, dark navy hoodie over a tan hoodie lining, backpack straps, huge grin |
+| ★ H-25 | `char-sakura` | Kafe çalışanı | a sweet young woman around 23, dark hair in a messy bun with a few loose strands, cozy cream knitted sweater, soft blush, dreamy smile |
+| ★ H-26 | `char-daichi` | Yazılımcı | a calm young man around 27, messy black hair, black rectangular glasses, olive green zip jacket over a white t-shirt, thoughtful expression |
+| ★ H-27 | `char-aiko` | Kurye | an energetic young woman around 25, long dark hair in a low ponytail, navy baseball cap, denim jacket, bright excited eyes |
+
+### HUD ve sipariş arayüzü
+
+### ★ H-28 `ui-hud-timer-bar.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw an empty game HUD bar for the top-left of the screen: a long dark rounded bar with a thick dark-brown outline and a wooden-brown border, a round red-and-cream stopwatch icon attached to its left end, an empty inner track (no fill), and three empty star outlines evenly placed along the right part of the bar. Transparent background. No text, no numbers, no watermark.
+```
+
+### ★ H-29 `ui-hud-bar-fill.png` — 1536×1024, şeffaf arka plan
+```
+Draw only a horizontal rounded progress fill strip, glossy orange-gold (#F5A34A to #F5CA72) with a light top highlight, meant to sit inside the attached timer bar's track. Transparent background. No text, no watermark.
+```
+
+### ★ H-30 `ui-star-filled.png` / H-31 `ui-star-empty.png` — 1024×1024, şeffaf arka plan
+```
+Draw one glossy golden game star with a thick dark-brown outline and a bright highlight. Transparent background. No text, no watermark.
+```
+```
+Draw the same star shape as the attached star but empty: dark brown inside with a subtle outline. Transparent background. No text, no watermark.
+```
+
+### ★ H-32 `ui-hud-coin-bar.png` / H-33 `ui-hud-cash-bar.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw an empty dark rounded HUD counter bar with a wooden-brown outline, with a big shiny golden coin icon attached on its left end (coin with a simple embossed symbol, no letters), empty inner area for a number. Transparent background. No text, no numbers, no watermark.
+```
+```
+Same HUD bar as the attached coin bar, identical size and shape, but the icon on the left is a small stack of green paper bills. Transparent background. No text, no numbers, no watermark.
+```
+> Not: Referans görselde iki para birimi var (jeton + nakit). Senin ana talimatında premium para birimini erken eklememe kuralı var. Bu yüzden oyunda **nakit = günlük kazanç/hedef** olarak kullanmayı öneriyorum, gerçek parayla satılan bir birim olarak değil.
+
+### ★ H-34 `ui-pause-square.png` — 1024×1024, şeffaf arka plan
+```
+Using the attached style reference, draw a square rounded game pause button: cream face with two dark-brown pause bars, thick warm wooden-brown border, glossy highlight. Transparent background. No text, no watermark.
+```
+
+### ★ H-35 `ui-order-bubble.png` — 1536×1024, şeffaf arka plan
+```
+Using the attached style reference, draw an empty game order speech bubble: a rounded square cream bubble with a thick dark-brown outline and soft shadow, a small tail pointing down-left, a large empty area on the left for a food picture, and an empty narrow vertical rounded meter slot along the right side (dark inside, no fill). Transparent background. No text, no watermark.
+```
+
+### ★ H-36 `ui-patience-fill-green.png` / H-37 `-yellow.png` / H-38 `-red.png` — 1024×1536, şeffaf arka plan
+```
+Draw only a vertical rounded meter fill strip, glossy bright green with a light highlight, meant to sit inside the vertical meter slot of the attached order bubble. Transparent background. No text, no watermark.
+```
+> Diğer ikisinde `bright green` yerine `golden yellow` ve `bright red` yaz.
+
+### ★ H-39 `ui-heart.png` / H-40 `ui-heart-broken.png` — 1024×1024, şeffaf arka plan
+```
+Draw one glossy cute red heart icon with a thick dark-brown outline and a white highlight, inside a small round cream badge. Transparent background. No text, no watermark.
+```
+```
+Same as the attached heart icon but the heart is cracked in two and greyish red. Transparent background. No text, no watermark.
 ```
 
 ---
