@@ -366,6 +366,9 @@ const renderers = {
 };
 
 // ------------------------------------------------------------------ router
+// Public link names (claude.ai reserves #upgrades and #customize); old names still work.
+const HASH_OUT = { upgrades: 'kitchen-shop', customize: 'decorate' };
+const HASH_IN = { 'kitchen-shop': 'upgrades', decorate: 'customize' };
 let screenAbort = null;
 const on = (target, type, fn) => target.addEventListener(type, fn, { signal: screenAbort.signal });
 
@@ -378,7 +381,8 @@ export function go(name) {
   svg.style.filter = '';
   ui.innerHTML = '';
   renderers[name]();
-  if (location.hash.slice(1) !== name) history.replaceState(null, '', `#${name}${location.search}`);
+  const h = HASH_OUT[name] || name;
+  if (location.hash.slice(1) !== h) history.replaceState(null, '', `#${h}${location.search}`);
   board();
 }
 
@@ -427,4 +431,4 @@ document.documentElement.lang = getLang();
 if (params.get('motion') === 'reduce') document.body.classList.add('reduce-motion');
 document.querySelector('#rotate-hint p').textContent = t('rotate');
 bindGlobal();
-go(location.hash.slice(1) || 'menu');
+go(HASH_IN[location.hash.slice(1)] || location.hash.slice(1) || 'menu');
