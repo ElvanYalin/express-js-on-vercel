@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -500 300 520" width="300" height="520"><g class="character " data-expression="surprised">
+    <ellipse cx="0" cy="0" rx="77" ry="10" fill="#292323" opacity=".22"/>
+    <g class="rig-body" transform="scale(1 1.02)"><g class="rig-legs">
+      <path d="M-30 -150 h24 v138 h-24z" fill="#292323" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 -150 h24 v138 h-24z" fill="#292323" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M-38 -14 h34 q4 14 -6 14 h-30z" fill="#292323"/><path d="M4 -14 h34 q8 14 -4 14 h-30z" fill="#292323"/></g><g class="rig-arm-l"><path d="M-57 -270 q-22 10 -24 80 v28" stroke="#292323" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M-57 -270 q-22 10 -24 80 v28" stroke="#A93C35" stroke-width="22" fill="none" stroke-linecap="round"/><circle cx="-81" cy="-156" r="14" fill="#C98E64" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></g><g class="rig-torso">
+      <path d="M-61 -150 v-104 q0 -30 30 -32 h62 q30 2 30 32 v104z" fill="#A93C35" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M-51 -170 h102" stroke="#8a1d16" stroke-width="6" opacity=".6"/>
+      <path d="M-22 -286 l22 26 l22 -26" fill="#FFF0D6" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      </g><g class="rig-arm-r"><path d="M57 -270 q22 10 24 80 v28" stroke="#292323" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M57 -270 q22 10 24 80 v28" stroke="#A93C35" stroke-width="22" fill="none" stroke-linecap="round"/><circle cx="81" cy="-156" r="14" fill="#C98E64" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></g><g class="rig-head" transform="translate(0 -360)">
+      <path d="M54 -50 q60 -10 50 60 q-6 30 -26 40 q16 -40 -14 -70z" fill="#5A3222" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="-16" y="56" width="32" height="30" fill="#aa6f45" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      <ellipse cx="0" cy="0" rx="68" ry="70" fill="#C98E64" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <ellipse cx="-68" cy="6" rx="10" ry="15" fill="#C98E64" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="68" cy="6" rx="10" ry="15" fill="#C98E64" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      
+      <ellipse cx="-30" cy="16" rx="12" ry="7" fill="#F2A5B8" opacity=".7"/><ellipse cx="50" cy="16" rx="12" ry="7" fill="#F2A5B8" opacity=".7"/>
+      <g class="rig-eyes"><circle cx="-14" cy="-6" r="11" fill="#FFF" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="34" cy="-6" r="11" fill="#FFF" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="-14" cy="-6" r="5" fill="#292323"/><circle cx="34" cy="-6" r="5" fill="#292323"/></g>
+      <g class="rig-brows"><path d="M-23 -32 q9 -7 18 0 M25 -32 q9 -7 18 0" stroke="#411909" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+      <path d="M12 4 q4 8 -2 10" stroke="#aa6f45" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <g class="rig-mouth">
+        <g class="mouth-closed"><ellipse cx="10" cy="28" rx="8" ry="11" fill="#7E2A26" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></g>
+        <g class="mouth-open"><ellipse cx="10" cy="28" rx="11" ry="9" fill="#7E2A26" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="10" cy="33" rx="6" ry="3" fill="#F2A5B8"/></g>
+      </g>
+      <path d="M-68 -12 q-2 -68 68 -70 q70 2 68 70 q-26 -34 -66 -30 q-40 0 -70 30z" fill="#5A3222" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M-70 -34 q70 -26 140 0 v16 q-70 -26 -140 0z" fill="#FFF0D6" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    </g></g></g></svg>

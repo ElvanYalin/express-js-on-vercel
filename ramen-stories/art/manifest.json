@@ -1,0 +1,970 @@
+{
+  "generated": "tools/export-assets.mjs",
+  "assets": [
+    {
+      "name": "bg-wall",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-architecture",
+      "box": [
+        -260,
+        -200,
+        2440,
+        820
+      ],
+      "file": "Backgrounds/bg-wall.svg"
+    },
+    {
+      "name": "bg-pillar",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-architecture",
+      "box": [
+        0,
+        0,
+        56,
+        560
+      ],
+      "file": "Backgrounds/bg-pillar.svg"
+    },
+    {
+      "name": "bg-window",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-windows",
+      "box": [
+        0,
+        0,
+        340,
+        290
+      ],
+      "file": "Backgrounds/bg-window.svg"
+    },
+    {
+      "name": "bg-lantern",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-lanterns",
+      "box": [
+        -60,
+        0,
+        120,
+        210
+      ],
+      "file": "Backgrounds/bg-lantern.svg"
+    },
+    {
+      "name": "bg-banner",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-decor",
+      "box": [
+        0,
+        0,
+        96,
+        300
+      ],
+      "file": "Backgrounds/bg-banner.svg"
+    },
+    {
+      "name": "bg-shelf",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-decor",
+      "box": [
+        0,
+        0,
+        220,
+        190
+      ],
+      "file": "Backgrounds/bg-shelf.svg"
+    },
+    {
+      "name": "bg-dining-table",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-furniture",
+      "box": [
+        -170,
+        -20,
+        340,
+        150
+      ],
+      "file": "Backgrounds/bg-dining-table.svg"
+    },
+    {
+      "name": "bg-stool",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-furniture",
+      "box": [
+        -40,
+        -10,
+        80,
+        100
+      ],
+      "file": "Backgrounds/bg-stool.svg"
+    },
+    {
+      "name": "bg-door",
+      "category": "Backgrounds",
+      "sortingLayer": "bg-door",
+      "box": [
+        0,
+        -40,
+        230,
+        520
+      ],
+      "file": "Backgrounds/bg-door.svg"
+    },
+    {
+      "name": "deco-wall-art",
+      "category": "Decorations",
+      "sortingLayer": "bg-decor",
+      "box": [
+        0,
+        0,
+        150,
+        190
+      ],
+      "file": "Decorations/deco-wall-art.svg"
+    },
+    {
+      "name": "deco-plant",
+      "category": "Decorations",
+      "sortingLayer": "bg-decor",
+      "box": [
+        -60,
+        -170,
+        120,
+        170
+      ],
+      "file": "Decorations/deco-plant.svg"
+    },
+    {
+      "name": "kitchen-counter",
+      "category": "Kitchen",
+      "sortingLayer": "counter",
+      "box": [
+        -260,
+        560,
+        2440,
+        180
+      ],
+      "file": "Kitchen/kitchen-counter.svg"
+    },
+    {
+      "name": "kitchen-serving-tray",
+      "category": "Kitchen",
+      "sortingLayer": "counter-props",
+      "box": [
+        -150,
+        -30,
+        300,
+        60
+      ],
+      "file": "Kitchen/kitchen-serving-tray.svg"
+    },
+    {
+      "name": "kitchen-worktop",
+      "category": "Kitchen",
+      "sortingLayer": "kitchen-surface",
+      "box": [
+        -260,
+        720,
+        2440,
+        560
+      ],
+      "file": "Kitchen/kitchen-worktop.svg"
+    },
+    {
+      "name": "equip-stove",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        600,
+        230
+      ],
+      "file": "Equipment/equip-stove.svg"
+    },
+    {
+      "name": "equip-broth-pot",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        -95,
+        -170,
+        190,
+        175
+      ],
+      "file": "Equipment/equip-broth-pot.svg"
+    },
+    {
+      "name": "equip-ladle",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-fx",
+      "box": [
+        -20,
+        -150,
+        160,
+        180
+      ],
+      "file": "Equipment/equip-ladle.svg"
+    },
+    {
+      "name": "equip-noodle-cooker",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        260,
+        190
+      ],
+      "file": "Equipment/equip-noodle-cooker.svg"
+    },
+    {
+      "name": "equip-noodle-basket",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        -60,
+        -130,
+        120,
+        140
+      ],
+      "file": "Equipment/equip-noodle-basket.svg"
+    },
+    {
+      "name": "equip-noodle-box",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        130,
+        70
+      ],
+      "file": "Equipment/equip-noodle-box.svg"
+    },
+    {
+      "name": "equip-bowl-stack",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        -70,
+        -120,
+        140,
+        130
+      ],
+      "file": "Equipment/equip-bowl-stack.svg"
+    },
+    {
+      "name": "equip-ingredient-tray",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        104,
+        84
+      ],
+      "file": "Equipment/equip-ingredient-tray.svg"
+    },
+    {
+      "name": "equip-sauce-bottle",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        -24,
+        -92,
+        48,
+        96
+      ],
+      "file": "Equipment/equip-sauce-bottle.svg"
+    },
+    {
+      "name": "equip-cutting-board",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        220,
+        80
+      ],
+      "file": "Equipment/equip-cutting-board.svg"
+    },
+    {
+      "name": "equip-sink",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        200,
+        130
+      ],
+      "file": "Equipment/equip-sink.svg"
+    },
+    {
+      "name": "equip-refrigerator",
+      "category": "Equipment",
+      "sortingLayer": "kitchen-equipment",
+      "box": [
+        0,
+        0,
+        160,
+        300
+      ],
+      "file": "Equipment/equip-refrigerator.svg"
+    },
+    {
+      "name": "food-bowl-composite",
+      "category": "Food",
+      "sortingLayer": "bowl",
+      "box": [
+        -130,
+        -60,
+        260,
+        140
+      ],
+      "file": "Food/food-bowl-composite.svg"
+    },
+    {
+      "name": "food-noodles-thin",
+      "category": "Ingredients",
+      "sortingLayer": "kitchen-items",
+      "box": [
+        -46,
+        -32,
+        92,
+        64
+      ],
+      "file": "Ingredients/food-noodles-thin.svg"
+    },
+    {
+      "name": "food-noodles-thick",
+      "category": "Ingredients",
+      "sortingLayer": "kitchen-items",
+      "box": [
+        -46,
+        -32,
+        92,
+        64
+      ],
+      "file": "Ingredients/food-noodles-thick.svg"
+    },
+    {
+      "name": "fx-steam",
+      "category": "Effects",
+      "sortingLayer": "fx",
+      "box": [
+        -50,
+        -160,
+        100,
+        170
+      ],
+      "file": "Effects/fx-steam.svg"
+    },
+    {
+      "name": "fx-petal",
+      "category": "Effects",
+      "sortingLayer": "fx",
+      "box": [
+        -10,
+        -8,
+        20,
+        16
+      ],
+      "file": "Effects/fx-petal.svg"
+    },
+    {
+      "name": "fx-sparkle",
+      "category": "Effects",
+      "sortingLayer": "fx",
+      "box": [
+        -30,
+        -30,
+        60,
+        60
+      ],
+      "file": "Effects/fx-sparkle.svg"
+    },
+    {
+      "name": "ui-coin",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        -26,
+        -26,
+        52,
+        52
+      ],
+      "file": "UI/ui-coin.svg"
+    },
+    {
+      "name": "ingredient-chashu",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-chashu.svg"
+    },
+    {
+      "name": "ingredient-chicken",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-chicken.svg"
+    },
+    {
+      "name": "ingredient-egg",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-egg.svg"
+    },
+    {
+      "name": "ingredient-nori",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-nori.svg"
+    },
+    {
+      "name": "ingredient-greenOnion",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-greenOnion.svg"
+    },
+    {
+      "name": "ingredient-corn",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-corn.svg"
+    },
+    {
+      "name": "ingredient-mushroom",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-mushroom.svg"
+    },
+    {
+      "name": "ingredient-bamboo",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-bamboo.svg"
+    },
+    {
+      "name": "ingredient-naruto",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-naruto.svg"
+    },
+    {
+      "name": "ingredient-chili",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-chili.svg"
+    },
+    {
+      "name": "ingredient-beef",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-beef.svg"
+    },
+    {
+      "name": "ingredient-garlic",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-garlic.svg"
+    },
+    {
+      "name": "ingredient-sesame",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-sesame.svg"
+    },
+    {
+      "name": "ingredient-sprouts",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-sprouts.svg"
+    },
+    {
+      "name": "ingredient-spinach",
+      "category": "Ingredients",
+      "sortingLayer": "food",
+      "box": [
+        -40,
+        -40,
+        80,
+        80
+      ],
+      "file": "Ingredients/ingredient-spinach.svg"
+    },
+    {
+      "name": "icon-shop",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-shop.svg"
+    },
+    {
+      "name": "icon-upgrades",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-upgrades.svg"
+    },
+    {
+      "name": "icon-employees",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-employees.svg"
+    },
+    {
+      "name": "icon-recipes",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-recipes.svg"
+    },
+    {
+      "name": "icon-tasks",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-tasks.svg"
+    },
+    {
+      "name": "icon-events",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-events.svg"
+    },
+    {
+      "name": "icon-customize",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-customize.svg"
+    },
+    {
+      "name": "icon-achievements",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-achievements.svg"
+    },
+    {
+      "name": "icon-more",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-more.svg"
+    },
+    {
+      "name": "icon-pause",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-pause.svg"
+    },
+    {
+      "name": "icon-settings",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-settings.svg"
+    },
+    {
+      "name": "icon-satisfaction",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-satisfaction.svg"
+    },
+    {
+      "name": "icon-clock",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-clock.svg"
+    },
+    {
+      "name": "icon-coin",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-coin.svg"
+    },
+    {
+      "name": "icon-order",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-order.svg"
+    },
+    {
+      "name": "icon-lock",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-lock.svg"
+    },
+    {
+      "name": "icon-flowBroth",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-flowBroth.svg"
+    },
+    {
+      "name": "icon-flowNoodles",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-flowNoodles.svg"
+    },
+    {
+      "name": "icon-flowBowl",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-flowBowl.svg"
+    },
+    {
+      "name": "icon-flowToppings",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-flowToppings.svg"
+    },
+    {
+      "name": "icon-flowServe",
+      "category": "UI",
+      "sortingLayer": "ui",
+      "box": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "UI/icon-flowServe.svg"
+    }
+  ],
+  "characters": [
+    {
+      "id": "chef",
+      "files": [
+        "Characters/chef/chef-front.svg",
+        "Characters/chef/chef-threeQuarter.svg",
+        "Characters/chef/chef-side.svg",
+        "Characters/chef/chef-neutral.svg",
+        "Characters/chef/chef-happy.svg",
+        "Characters/chef/chef-angry.svg",
+        "Characters/chef/chef-confused.svg",
+        "Characters/chef/chef-surprised.svg",
+        "Characters/chef/chef-talking.svg",
+        "Characters/chef/chef-sheet.svg"
+      ]
+    },
+    {
+      "id": "mei",
+      "files": [
+        "Characters/mei/mei-front.svg",
+        "Characters/mei/mei-threeQuarter.svg",
+        "Characters/mei/mei-side.svg",
+        "Characters/mei/mei-neutral.svg",
+        "Characters/mei/mei-happy.svg",
+        "Characters/mei/mei-angry.svg",
+        "Characters/mei/mei-confused.svg",
+        "Characters/mei/mei-surprised.svg",
+        "Characters/mei/mei-talking.svg",
+        "Characters/mei/mei-sheet.svg"
+      ]
+    },
+    {
+      "id": "kenji",
+      "files": [
+        "Characters/kenji/kenji-front.svg",
+        "Characters/kenji/kenji-threeQuarter.svg",
+        "Characters/kenji/kenji-side.svg",
+        "Characters/kenji/kenji-neutral.svg",
+        "Characters/kenji/kenji-happy.svg",
+        "Characters/kenji/kenji-angry.svg",
+        "Characters/kenji/kenji-confused.svg",
+        "Characters/kenji/kenji-surprised.svg",
+        "Characters/kenji/kenji-talking.svg",
+        "Characters/kenji/kenji-sheet.svg"
+      ]
+    },
+    {
+      "id": "ece",
+      "files": [
+        "Characters/ece/ece-front.svg",
+        "Characters/ece/ece-threeQuarter.svg",
+        "Characters/ece/ece-side.svg",
+        "Characters/ece/ece-neutral.svg",
+        "Characters/ece/ece-happy.svg",
+        "Characters/ece/ece-angry.svg",
+        "Characters/ece/ece-confused.svg",
+        "Characters/ece/ece-surprised.svg",
+        "Characters/ece/ece-talking.svg",
+        "Characters/ece/ece-sheet.svg"
+      ]
+    },
+    {
+      "id": "hoshino",
+      "files": [
+        "Characters/hoshino/hoshino-front.svg",
+        "Characters/hoshino/hoshino-threeQuarter.svg",
+        "Characters/hoshino/hoshino-side.svg",
+        "Characters/hoshino/hoshino-neutral.svg",
+        "Characters/hoshino/hoshino-happy.svg",
+        "Characters/hoshino/hoshino-angry.svg",
+        "Characters/hoshino/hoshino-confused.svg",
+        "Characters/hoshino/hoshino-surprised.svg",
+        "Characters/hoshino/hoshino-talking.svg",
+        "Characters/hoshino/hoshino-sheet.svg"
+      ]
+    },
+    {
+      "id": "lukas",
+      "files": [
+        "Characters/lukas/lukas-front.svg",
+        "Characters/lukas/lukas-threeQuarter.svg",
+        "Characters/lukas/lukas-side.svg",
+        "Characters/lukas/lukas-neutral.svg",
+        "Characters/lukas/lukas-happy.svg",
+        "Characters/lukas/lukas-angry.svg",
+        "Characters/lukas/lukas-confused.svg",
+        "Characters/lukas/lukas-surprised.svg",
+        "Characters/lukas/lukas-talking.svg",
+        "Characters/lukas/lukas-sheet.svg"
+      ]
+    },
+    {
+      "id": "taro",
+      "files": [
+        "Characters/taro/taro-front.svg",
+        "Characters/taro/taro-threeQuarter.svg",
+        "Characters/taro/taro-side.svg",
+        "Characters/taro/taro-neutral.svg",
+        "Characters/taro/taro-happy.svg",
+        "Characters/taro/taro-angry.svg",
+        "Characters/taro/taro-confused.svg",
+        "Characters/taro/taro-surprised.svg",
+        "Characters/taro/taro-talking.svg",
+        "Characters/taro/taro-sheet.svg"
+      ]
+    },
+    {
+      "id": "nami",
+      "files": [
+        "Characters/nami/nami-front.svg",
+        "Characters/nami/nami-threeQuarter.svg",
+        "Characters/nami/nami-side.svg",
+        "Characters/nami/nami-neutral.svg",
+        "Characters/nami/nami-happy.svg",
+        "Characters/nami/nami-angry.svg",
+        "Characters/nami/nami-confused.svg",
+        "Characters/nami/nami-surprised.svg",
+        "Characters/nami/nami-talking.svg",
+        "Characters/nami/nami-sheet.svg"
+      ]
+    },
+    {
+      "id": "bora",
+      "files": [
+        "Characters/bora/bora-front.svg",
+        "Characters/bora/bora-threeQuarter.svg",
+        "Characters/bora/bora-side.svg",
+        "Characters/bora/bora-neutral.svg",
+        "Characters/bora/bora-happy.svg",
+        "Characters/bora/bora-angry.svg",
+        "Characters/bora/bora-confused.svg",
+        "Characters/bora/bora-surprised.svg",
+        "Characters/bora/bora-talking.svg",
+        "Characters/bora/bora-sheet.svg"
+      ]
+    }
+  ]
+}

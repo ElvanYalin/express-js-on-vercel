@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 190" width="260" height="190"><defs><linearGradient id="nc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFC9C1" stop-opacity="1"/><stop offset="1" stop-color="#6F6862" stop-opacity="1"/></linearGradient><linearGradient id="water2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFE0DA" stop-opacity="1"/><stop offset="1" stop-color="#8CC3BB" stop-opacity="1"/></linearGradient></defs>
+      <rect x="6" y="40" width="248" height="140" rx="12" fill="url(#nc1)" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="20" y="120" width="220" height="40" rx="8" fill="#6F6862" opacity=".5"/>
+      <circle cx="130" cy="140" r="12" fill="#A9A39B" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      <ellipse cx="130" cy="44" rx="118" ry="20" fill="#6F6862" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <ellipse cx="130" cy="46" rx="106" ry="14" fill="url(#water2)"/>
+      <g class="boil"><circle cx="70" cy="46" r="5" fill="#E6F4F1"/><circle cx="170" cy="44" r="4" fill="#E6F4F1"/><circle cx="120" cy="50" r="3.5" fill="#E6F4F1"/><circle cx="200" cy="48" r="3" fill="#E6F4F1"/></g></svg>

@@ -12,5 +12,12 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0"
+  },
+  "scripts": {
+    "test:ramen": "node --test ramen-stories/tests/*.test.mjs",
+    "ramen:serve": "node ramen-stories/tools/serve.mjs 4173",
+    "ramen:export": "node ramen-stories/tools/export-assets.mjs",
+    "ramen:playtest": "node ramen-stories/tools/playtest.mjs",
+    "ramen:screenshots": "node ramen-stories/tools/screenshots.mjs"
   }
 }

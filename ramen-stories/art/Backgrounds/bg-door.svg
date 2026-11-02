@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -40 230 520" width="230" height="520"><defs><linearGradient id="pane1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E0" stop-opacity="1"/><stop offset="1" stop-color="#F3D9A8" stop-opacity="1"/></linearGradient></defs>
+      <rect x="10" y="40" width="210" height="400" fill="#4F8F89"/>
+      <path d="M10 360 h210 v80 h-210z" fill="#F5CA72" opacity=".35"/>
+      <g class="door-left"><g><rect x="14" y="40" width="96" height="400" fill="#986044" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="26" y="56" width="72" height="250" fill="url(#pane1)" stroke="#292323" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <g stroke="#6B3F2E" stroke-width="4"><line x1="50" y1="56" x2="50" y2="306"/><line x1="74" y1="56" x2="74" y2="306"/>
+      <line x1="26" y1="140" x2="98" y2="140"/><line x1="26" y1="222" x2="98" y2="222"/></g>
+      <rect x="26" y="320" width="72" height="104" fill="#6B3F2E" stroke="#292323" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g></g>
+      <g class="door-right" style="transform: translateX(0px)"><g><rect x="120" y="40" width="96" height="400" fill="#986044" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="132" y="56" width="72" height="250" fill="url(#pane1)" stroke="#292323" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <g stroke="#6B3F2E" stroke-width="4"><line x1="156" y1="56" x2="156" y2="306"/><line x1="180" y1="56" x2="180" y2="306"/>
+      <line x1="132" y1="140" x2="204" y2="140"/><line x1="132" y1="222" x2="204" y2="222"/></g>
+      <rect x="132" y="320" width="72" height="104" fill="#6B3F2E" stroke="#292323" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></g></g>
+      <rect x="0" y="28" width="230" height="16" rx="3" fill="#432820" stroke="#292323" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="0" y="436" width="230" height="12" fill="#432820" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      <g class="noren">
+        <path d="M18 44 h62 v118 q-31 10 -62 0z" fill="#A93C35" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M84 44 h62 v118 q-31 10 -62 0z" fill="#A93C35" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M150 44 h62 v118 q-31 10 -62 0z" fill="#A93C35" stroke="#292323" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="115" cy="98" r="24" fill="#FFF0D6" stroke="#292323" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M99 98 h32 a16 14 0 0 1 -32 0z" fill="#A93C35"/>
+      </g></svg>
